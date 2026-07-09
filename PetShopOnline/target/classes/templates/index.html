@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <section class="row align-items-center mb-5">
+        <div class="col-md-5">
+            <h1 class="titulo-principal">
+                Todo para tu mascota, en un solo lugar!
+            </h1>
+            <p class="lead mt-3">
+                Encuentra alimentos, accesorios y productos esenciales para consentir a tu mascota.
+            </p>
+            <a th:href="@{/productos}" class="btn btn-dark btn-lg mt-3">
+                Ver productos
+            </a>
+        </div>
+
+        <div class="col-md-7 text-center">
+            <img src="https://images.unsplash.com/photo-1601758123927-196f01c5fe4a"
+                 class="img-fluid imagen-principal"
+                 alt="Mascotas">
+        </div>
+    </section>
+
+    <section>
+        <div class="d-flex justify-content-start mb-4">
+            <h2 class="subtitulo-seccion">
+                Productos Destacados
+            </h2>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="card producto-card h-100">
+                    <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119"
+                         class="card-img-top producto-img"
+                         alt="Alimento">
+                    <div class="card-body">
+                        <h5 class="card-title">Alimento Premium</h5>
+                        <p class="card-text">Alimento balanceado para perros adultos.</p>
+                        <p class="precio">$25.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card producto-card h-100">
+                    <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd"
+                         class="card-img-top producto-img"
+                         alt="Juguete">
+                    <div class="card-body">
+                        <h5 class="card-title">Juguete para Perro</h5>
+                        <p class="card-text">Juguete resistente para mascotas activas.</p>
+                        <p class="precio">$8.50</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card producto-card h-100">
+                    <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006"
+                         class="card-img-top producto-img"
+                         alt="Gato">
+                    <div class="card-body">
+                        <h5 class="card-title">Arena para Gato</h5>
+                        <p class="card-text">Arena absorbente con control de olores.</p>
+                        <p class="precio">$12.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card producto-card h-100">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b"
+                         class="card-img-top producto-img"
+                         alt="Correa">
+                    <div class="card-body">
+                        <h5 class="card-title">Correa Ajustable</h5>
+                        <p class="card-text">Correa cómoda y resistente.</p>
+                        <p class="precio">$10.00</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer th:replace="~{fragmentos :: footer}"></footer>
+
+</body>
+</html>

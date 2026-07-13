@@ -41,9 +41,40 @@
                 </ul>
 
                 <div class="d-flex gap-3">
-                    <a class="nav-link fs-4" th:href="@{/login}">
-                        👤
-                    </a>
+                    <div th:if="${session.usuarioSesion == null}">
+    <a class="nav-link fs-5" th:href="@{/login}">
+        Iniciar sesión
+    </a>
+                </div>
+
+                    <div class="dropdown" th:if="${session.usuarioSesion != null}">
+
+                        <a class="nav-link dropdown-toggle fs-5"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown">
+
+                        👤 [[${session.usuarioSesion.nombre}]]
+
+                        </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li>
+                <a class="dropdown-item" th:href="@{/perfil}">
+                    Mi perfil
+                </a>
+            </li>
+
+             <li>
+                <a class="dropdown-item" th:href="@{/logout}">
+                    Cerrar sesión
+                </a>
+             </li>
+
+            </ul>
+
+                    </div>
 
                     <a class="nav-link fs-4" th:href="@{/carrito}">
                         🛒

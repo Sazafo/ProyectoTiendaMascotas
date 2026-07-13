@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de usuario</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+
+<div class="contenedor-formulario">
+
+    <h2>Perfil de usuario</h2>
+
+    <p>
+        <strong>Nombre:</strong>
+        <span th:text="${usuario.nombre}"></span>
+    </p>
+
+    <p>
+        <strong>Correo:</strong>
+        <span th:text="${usuario.correo}"></span>
+    </p>
+
+    <a th:href="@{/}">
+        Volver al inicio
+    </a>
+
+    <br><br>
+
+    <a th:href="@{/logout}">
+        Cerrar sesión
+    </a>
+
+</div>
+
+</body>
+</html>

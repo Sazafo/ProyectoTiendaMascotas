@@ -37,54 +37,23 @@
 
         <div class="row g-4">
 
-            <div class="col-md-3">
+            <div class="col-md-3" th:each="producto : ${productos}">
                 <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119"
+                    <img th:src="${producto.imagen}"
                          class="card-img-top producto-img"
-                         alt="Alimento">
-                    <div class="card-body">
-                        <h5 class="card-title">Alimento Premium</h5>
-                        <p class="card-text">Alimento balanceado para perros adultos.</p>
-                        <p class="precio">$25.00</p>
-                    </div>
-                </div>
-            </div>
+                         th:alt="${producto.nombre}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${producto.nombre}"></h5>
+                        <p class="card-text" th:text="${producto.descripcion}"></p>
+                        <p class="precio" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}"></p>
 
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd"
-                         class="card-img-top producto-img"
-                         alt="Juguete">
-                    <div class="card-body">
-                        <h5 class="card-title">Juguete para Perro</h5>
-                        <p class="card-text">Juguete resistente para mascotas activas.</p>
-                        <p class="precio">$8.50</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006"
-                         class="card-img-top producto-img"
-                         alt="Gato">
-                    <div class="card-body">
-                        <h5 class="card-title">Arena para Gato</h5>
-                        <p class="card-text">Arena absorbente con control de olores.</p>
-                        <p class="precio">$12.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b"
-                         class="card-img-top producto-img"
-                         alt="Correa">
-                    <div class="card-body">
-                        <h5 class="card-title">Correa Ajustable</h5>
-                        <p class="card-text">Correa cómoda y resistente.</p>
-                        <p class="precio">$10.00</p>
+                        <form th:action="@{/carrito/agregar}" method="post" class="mt-auto">
+                            <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" class="btn btn-dark w-100">
+                                Agregar al carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

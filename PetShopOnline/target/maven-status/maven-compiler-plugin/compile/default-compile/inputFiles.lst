@@ -1,2 +1,12 @@
-C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\IndexController.java
-C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\PetShopOnlineApplication.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CarritoController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\IndexController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\UsuarioController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Carrito.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\ItemCarrito.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Pedido.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Producto.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Usuario.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\PetShopOnlineApplication.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\PedidoService.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\ProductoService.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\UsuarioService.java

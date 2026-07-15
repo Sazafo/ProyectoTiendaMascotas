@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head}">
+    <title>Productos - Admin</title>
+</head>
+
+<body class="admin-body">
+
+<div class="admin-layout">
+
+    <!-- Menú lateral -->
+    <aside th:replace="~{fragmentos :: adminSidebar}"></aside>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+
+        <div class="admin-topbar">
+            <h1 class="admin-page-title">📦 Gestión de Productos</h1>
+            <a th:href="@{/admin}" class="btn btn-outline-dark btn-sm">← Dashboard</a>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Formulario alta / edición -->
+            <div class="col-lg-4">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5 th:text="${producto.idProducto != null} ? 'Editar Producto' : 'Nuevo Producto'">
+                            Nuevo Producto
+                        </h5>
+                    </div>
+                    <div class="admin-card-body">
+                        <form th:action="@{/admin/productos/guardar}" method="post">
+
+                            <!-- Campo oculto: sólo se envía si se está editando -->
+                            <input type="hidden" name="idProducto"
+                                   th:if="${producto.idProducto != null}"
+                                   th:value="${producto.idProducto}">
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Nombre</label>
+                                <input type="text"
+                                       name="nombre"
+                                       class="form-control"
+                                       th:value="${producto.nombre}"
+                                       placeholder="Nombre del producto"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Descripción</label>
+                                <textarea name="descripcion"
+                                          class="form-control"
+                                          rows="2"
+                                          placeholder="Descripción breve"
+                                          th:text="${producto.descripcion}"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Precio ($)</label>
+                                <input type="number"
+                                       name="precio"
+                                       class="form-control"
+                                       step="0.01"
+                                       min="0"
+                                       th:value="${producto.precio}"
+                                       placeholder="0.00"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">URL de imagen</label>
+                                <input type="text"
+                                       name="imagen"
+                                       class="form-control"
+                                       th:value="${producto.imagen}"
+                                       placeholder="https://...">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Categoría</label>
+                                <select name="idCategoria" class="form-select">
+                                    <option value="">— Sin categoría —</option>
+                                    <option th:each="cat : ${categorias}"
+                                            th:value="${cat.idCategoria}"
+                                            th:text="${cat.nombre}"
+                                            th:selected="${producto.idCategoria != null and producto.idCategoria == cat.idCategoria}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-dark w-100">
+                                    <span th:text="${producto.idProducto != null} ? 'Actualizar' : 'Guardar'">
+                                        Guardar
+                                    </span>
+                                </button>
+                                <a th:if="${producto.idProducto != null}"
+                                   th:href="@{/admin/productos}"
+                                   class="btn btn-outline-secondary">
+                                    Cancelar
+                                </a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de productos -->
+            <div class="col-lg-8">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5>Productos registrados</h5>
+                    </div>
+                    <div class="admin-card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Categoría</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="prod : ${productos}">
+                                    <td th:text="${prod.idProducto}"></td>
+                                    <td>
+                                        <img th:src="${prod.imagen}"
+                                             th:alt="${prod.nombre}"
+                                             class="admin-product-thumb">
+                                    </td>
+                                    <td th:text="${prod.nombre}"></td>
+                                    <td th:text="'$' + ${#numbers.formatDecimal(prod.precio, 1, 2)}"></td>
+                                    <td>
+                                        <!-- Resolución del nombre de categoría -->
+                                        <span th:each="cat : ${categorias}"
+                                              th:if="${prod.idCategoria != null and prod.idCategoria == cat.idCategoria}"
+                                              th:text="${cat.nombre}"
+                                              class="badge bg-secondary">
+                                        </span>
+                                        <span th:if="${prod.idCategoria == null}"
+                                              class="text-muted">—</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/admin/productos/editar/{id}(id=${prod.idProducto})}"
+                                           class="btn btn-sm btn-outline-dark me-1">
+                                            Editar
+                                        </a>
+                                        <form th:action="@{/admin/productos/eliminar/{id}(id=${prod.idProducto})}"
+                                              method="post" class="d-inline">
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('¿Eliminar producto?')">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                <tr th:if="${#lists.isEmpty(productos)}">
+                                    <td colspan="6" class="text-center text-muted py-3">
+                                        No hay productos registrados.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

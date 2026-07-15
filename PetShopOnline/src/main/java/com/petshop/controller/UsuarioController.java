@@ -31,10 +31,11 @@ public class UsuarioController {
             usuario.setIdUsuario(1);
             usuario.setNombre("Administrador");
             usuario.setCorreo(correo);
+            usuario.setRol("ADMIN");
 
             session.setAttribute("usuarioSesion", usuario);
 
-            return "redirect:/perfil";
+            return "redirect:/admin";
         }
 
         model.addAttribute("error", "Correo o contraseña incorrectos");

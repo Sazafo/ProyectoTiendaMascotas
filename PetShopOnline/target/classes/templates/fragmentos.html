@@ -85,6 +85,42 @@
     </nav>
 </header>
 
+<!-- Menú lateral del panel administrativo -->
+<aside th:fragment="adminSidebar">
+    <div class="admin-sidebar d-flex flex-column">
+        <div class="admin-sidebar-brand">
+            <span>🐾 Admin Panel</span>
+        </div>
+        <nav class="admin-nav flex-grow-1">
+            <a th:href="@{/admin}"
+               th:classappend="${currentUri == '/admin' or currentUri == '/admin/'} ? 'active' : ''"
+               class="admin-nav-link">
+                📊 Dashboard
+            </a>
+            <a th:href="@{/admin/productos}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/productos')} ? 'active' : ''"
+               class="admin-nav-link">
+                📦 Productos
+            </a>
+            <a th:href="@{/admin/categorias}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/categorias')} ? 'active' : ''"
+               class="admin-nav-link">
+                🏷️ Categorías
+            </a>
+            <hr class="admin-nav-divider">
+            <a th:href="@{/}" class="admin-nav-link">
+                🏠 Tienda
+            </a>
+            <a th:href="@{/logout}" class="admin-nav-link admin-nav-logout">
+                🚪 Cerrar sesión
+            </a>
+        </nav>
+        <div class="admin-sidebar-footer">
+            <span th:text="${session.usuarioSesion?.nombre}"></span>
+        </div>
+    </div>
+</aside>
+
 <footer th:fragment="footer">
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <p class="mb-0">&copy; 2026 PetShop Online</p>

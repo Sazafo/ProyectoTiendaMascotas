@@ -7,16 +7,25 @@ public class Producto {
     private String descripcion;
     private Double precio;
     private String imagen;
+    private Integer idCategoria;
 
     public Producto() {
     }
 
-    public Producto(Integer idProducto, String nombre, String descripcion, Double precio, String imagen) {
-        this.idProducto = idProducto;
-        this.nombre = nombre;
+    public Producto(Integer idProducto, String nombre, String descripcion,
+                    Double precio, String imagen, Integer idCategoria) {
+        this.idProducto  = idProducto;
+        this.nombre      = nombre;
         this.descripcion = descripcion;
-        this.precio = precio;
-        this.imagen = imagen;
+        this.precio      = precio;
+        this.imagen      = imagen;
+        this.idCategoria = idCategoria;
+    }
+
+    // Constructor sin categoría para compatibilidad con código existente
+    public Producto(Integer idProducto, String nombre, String descripcion,
+                    Double precio, String imagen) {
+        this(idProducto, nombre, descripcion, precio, imagen, null);
     }
 
     public Integer getIdProducto() {
@@ -57,5 +66,13 @@ public class Producto {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Integer getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }

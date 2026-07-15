@@ -78,3 +78,172 @@ body {
     padding: 20px 25px;
     background-color: #eeeeee;
 }
+
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL ADMINISTRATIVO
+   ═══════════════════════════════════════════════════════════ */
+
+/* Layout base */
+.admin-body {
+    background-color: #f4f5f7;
+    margin: 0;
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.admin-sidebar {
+    width: 240px;
+    min-width: 240px;
+    background-color: #111111;
+    color: #ffffff;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.admin-sidebar-brand {
+    padding: 24px 20px 16px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-bottom: 1px solid #2a2a2a;
+    letter-spacing: 0.5px;
+}
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+}
+
+.admin-nav-link {
+    display: block;
+    padding: 11px 20px;
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.admin-nav-link:hover {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.admin-nav-link.active {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-left-color: #ffffff;
+    font-weight: 600;
+}
+
+.admin-nav-logout {
+    color: #ff7070;
+}
+
+.admin-nav-logout:hover {
+    color: #ff4444;
+    background-color: #1f0a0a;
+}
+
+.admin-nav-divider {
+    border-color: #2a2a2a;
+    margin: 8px 20px;
+}
+
+.admin-sidebar-footer {
+    padding: 16px 20px;
+    font-size: 0.82rem;
+    color: #888888;
+    border-top: 1px solid #2a2a2a;
+}
+
+/* ── Contenido principal ── */
+.admin-main {
+    flex: 1;
+    padding: 28px 32px;
+    overflow-y: auto;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.admin-page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ── Tarjetas de estadísticas ── */
+.admin-stat-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-stat-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.admin-stat-label {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-stat-value {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+/* ── Tarjeta de contenido ── */
+.admin-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eeeeee;
+    background-color: #fafafa;
+}
+
+.admin-card-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.admin-card-body {
+    padding: 20px;
+}
+
+/* ── Miniatura producto en tabla ── */
+.admin-product-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+}

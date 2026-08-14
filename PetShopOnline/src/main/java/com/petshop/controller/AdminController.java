@@ -22,68 +22,140 @@ public class AdminController {
     private final ProductoService productoService;
     private final CategoriaService categoriaService;
 
-    public AdminController(ProductoService productoService,
-                           CategoriaService categoriaService) {
-        this.productoService  = productoService;
+    public AdminController(
+            ProductoService productoService,
+            CategoriaService categoriaService) {
+
+        this.productoService = productoService;
         this.categoriaService = categoriaService;
     }
 
-    // Inyecta la URI actual en el modelo para que el sidebar pueda marcar el enlace activo.
+    // URI actual para marcar el enlace activo en el sidebar
     @ModelAttribute
-    public void agregarUriActual(HttpServletRequest request, Model model) {
-        model.addAttribute("currentUri", request.getRequestURI());
+    public void agregarUriActual(
+            HttpServletRequest request,
+            Model model) {
+
+        model.addAttribute(
+                "currentUri",
+                request.getRequestURI()
+        );
     }
 
-    // Comprueba que el usuario esté autenticado; redirige a /login si no.
+    // Comprueba si existe un usuario autenticado
     private boolean noAutenticado(HttpSession session) {
+
         return session.getAttribute("usuarioSesion") == null;
     }
 
-    // ─── Dashboard ────────────────────────────────────────────────────────────
+
+    // =========================================================
+    // DASHBOARD
+    // =========================================================
 
     @GetMapping({"", "/"})
-    public String dashboard(HttpSession session, Model model) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String dashboard(
+            HttpSession session,
+            Model model) {
 
-        int totalProductos  = productoService.listarTodos().size();
-        int totalCategorias = categoriaService.listarTodas().size();
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
 
-        model.addAttribute("totalProductos",  totalProductos);
-        model.addAttribute("totalCategorias", totalCategorias);
-        model.addAttribute("productos",       productoService.listarTodos());
-        model.addAttribute("categorias",      categoriaService.listarTodas());
+        int totalProductos =
+                productoService.listarTodos().size();
+
+        int totalCategorias =
+                categoriaService.listarTodas().size();
+
+        model.addAttribute(
+                "totalProductos",
+                totalProductos
+        );
+
+        model.addAttribute(
+                "totalCategorias",
+                totalCategorias
+        );
+
+        model.addAttribute(
+                "productos",
+                productoService.listarTodos()
+        );
+
+        model.addAttribute(
+                "categorias",
+                categoriaService.listarTodas()
+        );
 
         return "admin/dashboard";
     }
 
-    // ─── CRUD Productos ───────────────────────────────────────────────────────
+
+    // =========================================================
+    // CRUD PRODUCTOS
+    // =========================================================
 
     @GetMapping("/productos")
-    public String listarProductos(HttpSession session, Model model) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String listarProductos(
+            HttpSession session,
+            Model model) {
 
-        model.addAttribute("productos",  productoService.listarTodos());
-        model.addAttribute("categorias", categoriaService.listarTodas());
-        model.addAttribute("producto",   new Producto());
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute(
+                "productos",
+                productoService.listarTodos()
+        );
+
+        model.addAttribute(
+                "categorias",
+                categoriaService.listarTodas()
+        );
+
+        model.addAttribute(
+                "producto",
+                new Producto()
+        );
 
         return "admin/productos";
     }
+
 
     @GetMapping("/productos/editar/{id}")
-    public String editarProducto(@PathVariable Integer id,
-                                 HttpSession session,
-                                 Model model) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String editarProducto(
+            @PathVariable Integer id,
+            HttpSession session,
+            Model model) {
 
-        Producto producto = productoService.buscarPorId(id)
-                .orElse(new Producto());
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
 
-        model.addAttribute("producto",   producto);
-        model.addAttribute("productos",  productoService.listarTodos());
-        model.addAttribute("categorias", categoriaService.listarTodas());
+        Producto producto =
+                productoService.buscarPorId(id)
+                        .orElse(new Producto());
+
+        model.addAttribute(
+                "producto",
+                producto
+        );
+
+        model.addAttribute(
+                "productos",
+                productoService.listarTodos()
+        );
+
+        model.addAttribute(
+                "categorias",
+                categoriaService.listarTodas()
+        );
 
         return "admin/productos";
     }
+
 
     @PostMapping("/productos/guardar")
     public String guardarProducto(
@@ -95,9 +167,12 @@ public class AdminController {
             @RequestParam(required = false) Integer idCategoria,
             HttpSession session) {
 
-        if (noAutenticado(session)) return "redirect:/login";
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
 
         Producto producto = new Producto();
+
         producto.setIdProducto(idProducto);
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
@@ -110,40 +185,79 @@ public class AdminController {
         return "redirect:/admin/productos";
     }
 
+
     @PostMapping("/productos/eliminar/{id}")
-    public String eliminarProducto(@PathVariable Integer id,
-                                   HttpSession session) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String eliminarProducto(
+            @PathVariable Integer id,
+            HttpSession session) {
+
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
+
         productoService.eliminar(id);
+
         return "redirect:/admin/productos";
     }
 
-    // ─── CRUD Categorías ──────────────────────────────────────────────────────
+
+    // =========================================================
+    // CRUD CATEGORÍAS
+    // =========================================================
 
     @GetMapping("/categorias")
-    public String listarCategorias(HttpSession session, Model model) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String listarCategorias(
+            HttpSession session,
+            Model model) {
 
-        model.addAttribute("categorias", categoriaService.listarTodas());
-        model.addAttribute("categoria",  new Categoria());
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute(
+                "categorias",
+                categoriaService.listarTodas()
+        );
+
+        model.addAttribute(
+                "categoria",
+                new Categoria()
+        );
 
         return "admin/categorias";
     }
+
 
     @GetMapping("/categorias/editar/{id}")
-    public String editarCategoria(@PathVariable Integer id,
-                                  HttpSession session,
-                                  Model model) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String editarCategoria(
+            @PathVariable Integer id,
+            HttpSession session,
+            Model model) {
 
-        Categoria categoria = categoriaService.buscarPorId(id)
-                .orElse(new Categoria());
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
 
-        model.addAttribute("categoria",  categoria);
-        model.addAttribute("categorias", categoriaService.listarTodas());
+        Categoria categoria =
+                categoriaService.buscarPorId(id);
+
+        if (categoria == null) {
+            categoria = new Categoria();
+        }
+
+        model.addAttribute(
+                "categoria",
+                categoria
+        );
+
+        model.addAttribute(
+                "categorias",
+                categoriaService.listarTodas()
+        );
 
         return "admin/categorias";
     }
+
 
     @PostMapping("/categorias/guardar")
     public String guardarCategoria(
@@ -152,9 +266,12 @@ public class AdminController {
             @RequestParam String descripcion,
             HttpSession session) {
 
-        if (noAutenticado(session)) return "redirect:/login";
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
 
         Categoria categoria = new Categoria();
+
         categoria.setIdCategoria(idCategoria);
         categoria.setNombre(nombre);
         categoria.setDescripcion(descripcion);
@@ -164,11 +281,18 @@ public class AdminController {
         return "redirect:/admin/categorias";
     }
 
+
     @PostMapping("/categorias/eliminar/{id}")
-    public String eliminarCategoria(@PathVariable Integer id,
-                                    HttpSession session) {
-        if (noAutenticado(session)) return "redirect:/login";
+    public String eliminarCategoria(
+            @PathVariable Integer id,
+            HttpSession session) {
+
+        if (noAutenticado(session)) {
+            return "redirect:/login";
+        }
+
         categoriaService.eliminar(id);
+
         return "redirect:/admin/categorias";
     }
 }

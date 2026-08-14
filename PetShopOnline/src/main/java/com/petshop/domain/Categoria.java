@@ -9,6 +9,11 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(Integer idCategoria, String nombre) {
+        this.idCategoria = idCategoria;
+        this.nombre = nombre;
+    }
+
     public Categoria(Integer idCategoria, String nombre, String descripcion) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;

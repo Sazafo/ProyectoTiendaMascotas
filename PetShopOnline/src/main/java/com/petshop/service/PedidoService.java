@@ -9,10 +9,7 @@ import java.util.List;
 @Service
 public class PedidoService {
 
-    // Guardado temporal mientras no exista la base de datos.
-    // Cuando se conecte MySQL, este metodo guardar() pasa a ser
-    // un PedidoRepository extends JpaRepository<Pedido, Integer>
-    // y el CarritoController no necesita cambiar como lo llama.
+    
     private final List<Pedido> pedidos = new ArrayList<>();
     private Integer siguienteId = 1;
 
@@ -37,5 +34,33 @@ public class PedidoService {
         }
 
         return resultado;
+    }
+
+    public List<Pedido> listarTodos() {
+        return pedidos;
+    }
+
+    public Pedido buscarPorId(Integer idPedido) {
+
+        for (Pedido pedido : pedidos) {
+            if (pedido.getIdPedido().equals(idPedido)) {
+                return pedido;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean cambiarEstado(Integer idPedido, String estado) {
+
+        Pedido pedido = buscarPorId(idPedido);
+
+        if (pedido == null) {
+            return false;
+        }
+
+        pedido.setEstado(estado);
+
+        return true;
     }
 }

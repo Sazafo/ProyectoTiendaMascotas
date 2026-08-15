@@ -1,15 +1,103 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Pedido - PetShop</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}">
+</head>
+
+<body>
+
+<div class="barra-superior">
+
+    <h2>PetShop Online</h2>
+
+    <div>
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/pedidos}">Mis Pedidos</a>
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+
+</div>
+
+<div class="contenedor-usuario">
+
+    <h2 class="titulo-usuario">
+        Pedido #<span th:text="${pedido.idPedido}"></span>
+    </h2>
+
+    <p class="subtitulo">
+        Realizado el <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span>
+    </p>
+
+    <div class="datos-perfil">
+
+        <p>
+            <strong>Estado:</strong>
+
+            <span th:if="${pedido.estado == 'PENDIENTE'}" class="estado-pendiente">Pendiente</span>
+            <span th:if="${pedido.estado == 'ENVIADO'}" class="estado-enviado">Enviado</span>
+            <span th:if="${pedido.estado == 'ENTREGADO'}" class="estado-entregado">Entregado</span>
+
+        </p>
+
+        <p>
+            <strong>Dirección de envío:</strong>
+            <span th:text="${pedido.direccionEnvio}"></span>
+        </p>
+
+        <p>
+            <strong>Total:</strong>
+            <span th:text="'$' + ${#numbers.formatDecimal(pedido.total, 1, 2)}"></span>
+        </p>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr th:each="item : ${pedido.items}">
+
+                <td th:text="${item.producto.nombre}"></td>
+
+                <td th:text="'$' + ${#numbers.formatDecimal(item.producto.precio, 1, 2)}"></td>
+
+                <td th:text="${item.cantidad}"></td>
+
+                <td th:text="'$' + ${#numbers.formatDecimal(item.subtotal, 1, 2)}"></td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div style="margin-top: 25px;">
+
+        <a th:href="@{/pedidos}" class="btn-secundario">
+            Volver a mis pedidos
+        </a>
+
+    </div>
+
+</div>
+
+<div class="pie">
+    PetShop Online
+</div>
+
+</body>
 </html>

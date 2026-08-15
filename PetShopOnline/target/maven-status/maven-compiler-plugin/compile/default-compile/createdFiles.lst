@@ -1,6 +1,7 @@
 com\petshop\domain\Usuario.class
 com\petshop\controller\ProductoController.class
 com\petshop\service\PedidoService.class
+com\petshop\controller\CuentaController.class
 com\petshop\controller\UsuarioController.class
 com\petshop\PetShopOnlineApplication.class
 com\petshop\service\ProductoService.class
@@ -10,7 +11,12 @@ com\petshop\domain\Carrito.class
 com\petshop\service\CategoriaService.class
 com\petshop\controller\CarritoController.class
 com\petshop\domain\Categoria.class
+com\petshop\repository\UsuarioRepository.class
+com\petshop\controller\GestionUsuarioController.class
+com\petshop\controller\GestionPedidoController.class
 com\petshop\service\UsuarioService.class
+com\petshop\controller\PedidoController.class
 com\petshop\controller\AdminController.class
+com\petshop\config\SecurityConfig.class
 com\petshop\controller\IndexController.class
 com\petshop\domain\ItemCarrito.class

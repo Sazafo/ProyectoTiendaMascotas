@@ -18,3 +18,5 @@ Yedelyn: Dashboard de administrador, Menu Lateral, CRUD de categorias, Panel Adm
 Quedando pendientes historias de usarios: HU-04 cambiar la contraseña,  HU-05 Recuperacion contraseña por correo, HU-09 Ver historial de pedidos 
 Administrador HU-13 Cambiar contraseña administrador, HU-17 Gestion de pedidos, HU-18  Generar reporte de ventas,  HU-19 Gestionar Usuarios 
 Mejoras: Mejorar la parte visual del proyecto, a la hora de realizar inicios de sesion, perfil usuario y registrarse
+
+Yedelyn: Reportes, se abarca la HU-18: Reportes de ventas.

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios - PetShop</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}">
+</head>
+
+<body>
+
+<div class="barra-superior">
+
+    <h2>PetShop Online</h2>
+
+    <div>
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/perfil}">Mi Perfil</a>
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+
+</div>
+
+<div class="contenedor-usuario">
+
+    <h2 class="titulo-usuario">
+        🐾 Gestión de Usuarios
+    </h2>
+
+    <p class="subtitulo">
+        Administre el acceso, estado y seguridad de las cuentas de PetShop Online.
+    </p>
+
+    <div class="mensaje"
+         th:if="${mensaje}"
+         th:text="${mensaje}">
+    </div>
+
+    <div class="error"
+         th:if="${error}"
+         th:text="${error}">
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr th:each="usuario : ${usuarios}">
+
+                <td th:text="${usuario.idUsuario}"></td>
+
+                <td th:text="${usuario.nombre}"></td>
+
+                <td th:text="${usuario.correo}"></td>
+
+                <td th:text="${usuario.rol}"></td>
+
+                <td>
+
+                    <span th:if="${usuario.activo}"
+                          class="estado-activo">
+                        Activo
+                    </span>
+
+                    <span th:unless="${usuario.activo}"
+                          class="estado-inactivo">
+                        Inactivo
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <div class="acciones">
+
+                        <a th:href="@{/admin/cambiar-password(idUsuario=${usuario.idUsuario})}"
+                           class="btn-principal">
+                            Cambiar contraseña
+                        </a>
+
+                        <form th:if="${usuario.activo
+                                     and session.usuarioSesion.idUsuario != usuario.idUsuario}"
+                              th:action="@{/admin/usuario/estado}"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="idUsuario"
+                                   th:value="${usuario.idUsuario}">
+
+                            <input type="hidden"
+                                   name="activo"
+                                   value="false">
+
+                            <button type="submit"
+                                    class="btn-peligro">
+                                Desactivar
+                            </button>
+
+                        </form>
+
+                        <form th:if="${!usuario.activo}"
+                              th:action="@{/admin/usuario/estado}"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="idUsuario"
+                                   th:value="${usuario.idUsuario}">
+
+                            <input type="hidden"
+                                   name="activo"
+                                   value="true">
+
+                            <button type="submit"
+                                    class="btn-activar">
+                                Activar
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div style="margin-top: 25px;">
+
+        <a th:href="@{/perfil}"
+           class="btn-secundario">
+            Volver al perfil
+        </a>
+
+    </div>
+
+</div>
+
+<div class="pie">
+    PetShop Online
+</div>
+
+</body>
+</html>

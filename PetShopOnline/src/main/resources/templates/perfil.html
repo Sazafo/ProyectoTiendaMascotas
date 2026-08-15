@@ -3,36 +3,90 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Perfil de usuario</title>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <title>Mi Perfil - PetShop</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}">
 </head>
 
 <body>
 
+<div class="barra-superior">
+
+    <h2>PetShop Online</h2>
+
+    <div>
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+
+</div>
+
 <div class="contenedor-formulario">
 
-    <h2>Perfil de usuario</h2>
+    <h2 class="titulo-usuario">
+        Mi Perfil
+    </h2>
 
-    <p>
-        <strong>Nombre:</strong>
-        <span th:text="${usuario.nombre}"></span>
+    <p class="subtitulo">
+        Información de la cuenta
     </p>
 
-    <p>
-        <strong>Correo:</strong>
-        <span th:text="${usuario.correo}"></span>
-    </p>
+    <div class="datos-perfil">
 
-    <a th:href="@{/}">
-        Volver al inicio
-    </a>
+        <p>
+            <strong>Nombre:</strong>
+            <span th:text="${usuario.nombre}"></span>
+        </p>
 
-    <br><br>
+        <p>
+            <strong>Correo:</strong>
+            <span th:text="${usuario.correo}"></span>
+        </p>
 
-    <a th:href="@{/logout}">
-        Cerrar sesión
-    </a>
+        <p>
+            <strong>Rol:</strong>
+            <span th:text="${usuario.rol}"></span>
+        </p>
 
+        <p>
+            <strong>Estado:</strong>
+
+            <span th:if="${usuario.activo}"
+                  class="estado-activo">
+                Activo
+            </span>
+
+            <span th:unless="${usuario.activo}"
+                  class="estado-inactivo">
+                Inactivo
+            </span>
+        </p>
+
+    </div>
+
+    <div class="acciones">
+
+        <a th:href="@{/cuenta/cambiar-password}"
+           class="btn-principal">
+            Cambiar contraseña
+        </a>
+
+        <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"
+           th:href="@{/admin/usuarios}"
+           class="btn-principal">
+            Gestión de usuarios
+        </a>
+
+        <a th:href="@{/}"
+           class="btn-secundario">
+            Volver al inicio
+        </a>
+
+    </div>
+
+</div>
+
+<div class="pie">
+    PetShop Online
 </div>
 
 </body>

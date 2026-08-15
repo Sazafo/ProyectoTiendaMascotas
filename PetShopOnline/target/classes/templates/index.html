@@ -1,100 +1,418 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragmentos :: head}"></head>
 
 <body>
 
 <header th:replace="~{fragmentos :: header}"></header>
 
+
 <main class="container py-5">
 
+
+    <!-- ================================= -->
+    <!-- HERO -->
+    <!-- ================================= -->
+
     <section class="row align-items-center mb-5">
-        <div class="col-md-5">
+
+        <div class="col-lg-5">
+
             <h1 class="titulo-principal">
-                Todo para tu mascota, en un solo lugar!
+                Todo para tu mascota,
+                en un solo lugar!
             </h1>
+
             <p class="lead mt-3">
-                Encuentra alimentos, accesorios y productos esenciales para consentir a tu mascota.
+                Encuentra alimentos, accesorios y productos esenciales
+                para consentir a tu mascota.
             </p>
-            <a th:href="@{/productos}" class="btn btn-dark btn-lg mt-3">
+
+            <a th:href="@{/productos}"
+               class="btn btn-dark btn-lg mt-3">
+
                 Ver productos
+
             </a>
+
         </div>
 
-        <div class="col-md-7 text-center">
-            <img src="https://images.unsplash.com/photo-1601758123927-196f01c5fe4a"
+
+        <div class="col-lg-7 text-center mt-4 mt-lg-0">
+
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=85"
                  class="img-fluid imagen-principal"
                  alt="Mascotas">
+
         </div>
+
     </section>
 
-    <section>
-        <div class="d-flex justify-content-start mb-4">
-            <h2 class="subtitulo-seccion">
-                Productos Destacados
-            </h2>
+
+
+    <!-- ================================= -->
+    <!-- CARRUSEL -->
+    <!-- ================================= -->
+
+    <section class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-end mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    Recomendados para tu mascota
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Descubre algunos de nuestros productos destacados.
+                </p>
+
+            </div>
+
+            <a th:href="@{/productos}"
+               class="btn btn-outline-dark">
+
+                Ver catálogo
+
+            </a>
+
         </div>
+
+
+        <div id="carruselProductos"
+             class="carousel slide"
+             data-bs-ride="carousel">
+
+
+            <!-- SLIDES -->
+            <div class="carousel-inner rounded-4 shadow-sm">
+
+
+                <div th:each="producto, estado : ${productos}"
+                     class="carousel-item"
+                     th:classappend="${estado.index == 0} ? ' active'">
+
+
+                    <a th:href="@{/productos/detalle/{id}(id=${producto.idProducto})}"
+                       class="text-decoration-none">
+
+
+                        <div class="carrusel-contenido">
+
+
+                            <img th:src="${producto.imagen}"
+                                 th:alt="${producto.nombre}"
+                                 class="d-block w-100 carrusel-imagen">
+
+
+                            <div class="carousel-caption carrusel-texto">
+
+                                <span class="badge bg-light text-dark mb-2">
+                                    Producto recomendado
+                                </span>
+
+
+                                <h2 class="fw-bold"
+                                    th:text="${producto.nombre}">
+
+                                    Producto
+
+                                </h2>
+
+
+                                <p class="d-none d-md-block"
+                                   th:text="${producto.descripcion}">
+
+                                    Descripción
+
+                                </p>
+
+
+                                <h4 class="fw-bold"
+                                    th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">
+
+                                    $0.00
+
+                                </h4>
+
+
+                                <span class="btn btn-light mt-2">
+
+                                    <i class="fa-solid fa-eye me-2"></i>
+                                    Ver producto
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANTERIOR -->
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carruselProductos"
+                    data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+
+                <span class="visually-hidden">
+                    Anterior
+                </span>
+
+            </button>
+
+
+            <!-- SIGUIENTE -->
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carruselProductos"
+                    data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+
+                <span class="visually-hidden">
+                    Siguiente
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- CATEGORÍAS -->
+    <!-- ================================= -->
+
+    <section class="mb-5">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold">
+                Explora por categoría
+            </h2>
+
+            <p class="text-muted">
+                Encuentra más rápido lo que necesita tu mascota.
+            </p>
+
+        </div>
+
 
         <div class="row g-4">
 
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119"
-                         class="card-img-top producto-img"
-                         alt="Alimento">
-                    <div class="card-body">
-                        <h5 class="card-title">Alimento Premium</h5>
-                        <p class="card-text">Alimento balanceado para perros adultos.</p>
-                        <p class="precio">$25.00</p>
+
+            <!-- ALIMENTOS -->
+            <div class="col-md-4">
+
+                <a th:href="@{/productos(categoria=1)}"
+                   class="text-decoration-none text-dark">
+
+                    <div class="card categoria-card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <div class="categoria-icono mb-3">
+
+                                <i class="fa-solid fa-bowl-food"></i>
+
+                            </div>
+
+                            <h4 class="fw-bold">
+                                Alimentos
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Opciones para una alimentación equilibrada.
+                            </p>
+
+                        </div>
+
                     </div>
-                </div>
+
+                </a>
+
             </div>
 
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd"
-                         class="card-img-top producto-img"
-                         alt="Juguete">
-                    <div class="card-body">
-                        <h5 class="card-title">Juguete para Perro</h5>
-                        <p class="card-text">Juguete resistente para mascotas activas.</p>
-                        <p class="precio">$8.50</p>
+
+
+            <!-- ACCESORIOS -->
+            <div class="col-md-4">
+
+                <a th:href="@{/productos(categoria=2)}"
+                   class="text-decoration-none text-dark">
+
+                    <div class="card categoria-card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <div class="categoria-icono mb-3">
+
+                                <i class="fa-solid fa-bone"></i>
+
+                            </div>
+
+                            <h4 class="fw-bold">
+                                Accesorios
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Juguetes y artículos para acompañar su día.
+                            </p>
+
+                        </div>
+
                     </div>
-                </div>
+
+                </a>
+
             </div>
 
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006"
-                         class="card-img-top producto-img"
-                         alt="Gato">
-                    <div class="card-body">
-                        <h5 class="card-title">Arena para Gato</h5>
-                        <p class="card-text">Arena absorbente con control de olores.</p>
-                        <p class="precio">$12.00</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="card producto-card h-100">
-                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b"
-                         class="card-img-top producto-img"
-                         alt="Correa">
-                    <div class="card-body">
-                        <h5 class="card-title">Correa Ajustable</h5>
-                        <p class="card-text">Correa cómoda y resistente.</p>
-                        <p class="precio">$10.00</p>
+
+            <!-- HIGIENE -->
+            <div class="col-md-4">
+
+                <a th:href="@{/productos(categoria=3)}"
+                   class="text-decoration-none text-dark">
+
+                    <div class="card categoria-card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <div class="categoria-icono mb-3">
+
+                                <i class="fa-solid fa-soap"></i>
+
+                            </div>
+
+                            <h4 class="fw-bold">
+                                Higiene
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Productos para mantener a tu mascota limpia y cómoda.
+                            </p>
+
+                        </div>
+
                     </div>
-                </div>
+
+                </a>
+
             </div>
 
         </div>
+
     </section>
 
+
+
+    <!-- ================================= -->
+    <!-- PRODUCTOS DESTACADOS -->
+    <!-- ================================= -->
+
+    <section>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2 class="fw-bold">
+                Productos destacados
+            </h2>
+
+            <a th:href="@{/productos}"
+               class="text-decoration-none text-dark">
+
+                Ver todos
+
+                <i class="fa-solid fa-arrow-right ms-1"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-sm-6 col-md-4 col-lg-3"
+                 th:each="producto, estado : ${productos}"
+                 th:if="${estado.index < 4}">
+
+
+                <div class="card producto-card h-100 border-0 shadow-sm">
+
+
+                    <a th:href="@{/productos/detalle/{id}(id=${producto.idProducto})}">
+
+                        <img th:src="${producto.imagen}"
+                             th:alt="${producto.nombre}"
+                             class="card-img-top producto-img">
+
+                    </a>
+
+
+                    <div class="card-body d-flex flex-column">
+
+
+                        <h5 class="fw-bold"
+                            th:text="${producto.nombre}">
+
+                            Producto
+
+                        </h5>
+
+
+                        <p class="text-muted"
+                           th:text="${producto.descripcion}">
+
+                            Descripción
+
+                        </p>
+
+
+                        <p class="precio mt-auto"
+                           th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">
+
+                            $0.00
+
+                        </p>
+
+
+                        <a th:href="@{/productos/detalle/{id}(id=${producto.idProducto})}"
+                           class="btn btn-outline-dark w-100">
+
+                            Ver detalle
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
 </main>
+
 
 <footer th:replace="~{fragmentos :: footer}"></footer>
 
 </body>
+
 </html>

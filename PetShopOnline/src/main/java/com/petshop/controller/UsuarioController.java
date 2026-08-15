@@ -38,6 +38,10 @@ public class UsuarioController {
 
             session.setAttribute("usuarioSesion", usuario);
 
+            if ("ADMIN".equals(usuario.getRol())) {
+                return "redirect:/admin";
+            }
+
             return "redirect:/perfil";
         }
 

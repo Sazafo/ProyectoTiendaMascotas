@@ -1,2 +1,16 @@
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\AdminController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CarritoController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\IndexController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\ProductoController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\UsuarioController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Carrito.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Categoria.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\ItemCarrito.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Pedido.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Producto.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Usuario.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\PetShopOnlineApplication.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\CategoriaService.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\PedidoService.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\ProductoService.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\UsuarioService.java

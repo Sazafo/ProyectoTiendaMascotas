@@ -1,15 +1,88 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <div class="d-flex justify-content-start mb-4">
+        <h2 class="subtitulo-seccion">
+            Carrito de compras
+        </h2>
+    </div>
+
+    <div th:if="${carrito.estaVacio()}" class="alert alert-secondary">
+        Tu carrito está vacío.
+        <a th:href="@{/}">Ver productos</a>
+    </div>
+
+    <div th:if="${!carrito.estaVacio()}">
+
+        <table class="table align-middle carrito-tabla">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${carrito.items}">
+                    <td class="d-flex align-items-center gap-3">
+                        <img th:src="${item.producto.imagen}"
+                             class="carrito-item-img"
+                             th:alt="${item.producto.nombre}">
+                        <span th:text="${item.producto.nombre}"></span>
+                    </td>
+                    <td th:text="'$' + ${#numbers.formatDecimal(item.producto.precio, 1, 2)}"></td>
+                    <td>
+                        <form th:action="@{/carrito/actualizar}" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}">
+                            <input type="number"
+                                   name="cantidad"
+                                   th:value="${item.cantidad}"
+                                   min="1"
+                                   class="form-control form-control-sm carrito-cantidad">
+                            <button type="submit" class="btn btn-outline-dark btn-sm">
+                                Actualizar
+                            </button>
+                        </form>
+                    </td>
+                    <td th:text="'$' + ${#numbers.formatDecimal(item.subtotal, 1, 2)}"></td>
+                    <td>
+                        <form th:action="@{/carrito/eliminar}" method="post">
+                            <input type="hidden" name="idProducto" th:value="${item.producto.idProducto}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-end">
+            <div class="resumen-carrito">
+                <p class="fs-5">
+                    Total:
+                    <strong th:text="'$' + ${#numbers.formatDecimal(carrito.total, 1, 2)}"></strong>
+                </p>
+                <a th:href="@{/checkout}" class="btn btn-dark btn-lg w-100">
+                    Proceder al pago
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<footer th:replace="~{fragmentos :: footer}"></footer>
+
+</body>
 </html>

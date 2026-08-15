@@ -1,2 +1,16 @@
+com\petshop\domain\Usuario.class
+com\petshop\controller\ProductoController.class
+com\petshop\service\PedidoService.class
+com\petshop\controller\UsuarioController.class
 com\petshop\PetShopOnlineApplication.class
+com\petshop\service\ProductoService.class
+com\petshop\domain\Producto.class
+com\petshop\domain\Pedido.class
+com\petshop\domain\Carrito.class
+com\petshop\service\CategoriaService.class
+com\petshop\controller\CarritoController.class
+com\petshop\domain\Categoria.class
+com\petshop\service\UsuarioService.class
+com\petshop\controller\AdminController.class
 com\petshop\controller\IndexController.class
+com\petshop\domain\ItemCarrito.class

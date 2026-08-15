@@ -11,10 +11,6 @@ com\petshop\domain\Carrito.class
 com\petshop\service\CategoriaService.class
 com\petshop\controller\CarritoController.class
 com\petshop\domain\Categoria.class
-<<<<<<< HEAD
-com\petshop\service\UsuarioService.class
-com\petshop\controller\AdminController.class
-=======
 com\petshop\repository\UsuarioRepository.class
 com\petshop\controller\GestionUsuarioController.class
 com\petshop\controller\GestionPedidoController.class
@@ -22,6 +18,5 @@ com\petshop\service\UsuarioService.class
 com\petshop\controller\PedidoController.class
 com\petshop\controller\AdminController.class
 com\petshop\config\SecurityConfig.class
->>>>>>> Issac
 com\petshop\controller\IndexController.class
 com\petshop\domain\ItemCarrito.class

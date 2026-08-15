@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\config\SecurityConfig.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\AdminController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CarritoController.java
@@ -18,3 +19,27 @@ C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\servi
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\PedidoService.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\ProductoService.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\UsuarioService.java
+=======
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\config\SecurityConfig.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\AdminController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CarritoController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CuentaController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\GestionPedidoController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\GestionUsuarioController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\IndexController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\PedidoController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\ProductoController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\UsuarioController.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Carrito.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Categoria.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\ItemCarrito.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Pedido.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Producto.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Usuario.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\PetShopOnlineApplication.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\repository\UsuarioRepository.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\CategoriaService.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\PedidoService.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\ProductoService.java
+C:\Users\issac\OneDrive\Documentos\Trabajos de la u\Proyectos_Git\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\UsuarioService.java
+>>>>>>> Issac

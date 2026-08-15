@@ -3,10 +3,7 @@ package com.petshop.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// Representa una compra ya confirmada.
-// Cuando exista MySQL, esta clase se convierte en @Entity
-// (idPedido -> @Id @GeneratedValue, usuario -> @ManyToOne,
-// items -> tabla detalle_pedido con @OneToMany).
+
 public class Pedido {
 
     private Integer idPedido;
@@ -15,6 +12,7 @@ public class Pedido {
     private Double total;
     private String direccionEnvio;
     private LocalDateTime fecha;
+    private String estado;
 
     public Pedido() {
     }
@@ -25,6 +23,7 @@ public class Pedido {
         this.total = total;
         this.direccionEnvio = direccionEnvio;
         this.fecha = LocalDateTime.now();
+        this.estado = "PENDIENTE";
     }
 
     public Integer getIdPedido() {
@@ -73,5 +72,13 @@ public class Pedido {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

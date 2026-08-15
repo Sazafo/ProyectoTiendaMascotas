@@ -17,7 +17,10 @@ public class IndexController {
     @GetMapping("/")
     public String inicio(Model model) {
 
-        model.addAttribute("productos", productoService.listarTodos());
+        model.addAttribute(
+                "productos",
+                productoService.listarTodos()
+        );
 
         return "index";
     }

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -19,15 +20,18 @@
                 <div class="card shadow">
 
                     <div class="card-header bg-success text-white text-center">
-                        <h3>Iniciar Sesión</h3>
+                        <h3 class="mb-0">Iniciar Sesión</h3>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body p-4">
 
                         <form th:action="@{/login}" method="post">
 
                             <div class="mb-3">
-                                <label class="form-label">Correo</label>
+                                <label class="form-label">
+                                    Correo
+                                </label>
+
                                 <input type="email"
                                        name="correo"
                                        class="form-control"
@@ -35,27 +39,40 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
+                                <label class="form-label">
+                                    Contraseña
+                                </label>
+
                                 <input type="password"
                                        name="password"
                                        class="form-control"
                                        required>
                             </div>
 
-                            <div th:if="${error}" class="alert alert-danger">
+                            <div th:if="${error}"
+                                 class="alert alert-danger">
                                 [[${error}]]
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100">
+                            <button type="submit"
+                                    class="btn btn-success w-100">
                                 Ingresar
                             </button>
 
                         </form>
 
+                        <div class="text-center mt-3">
+                            <a th:href="@{/recuperar-password}"
+                               class="text-decoration-none">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
                         <hr>
 
-                        <p class="text-center">
+                        <p class="text-center mb-0">
                             ¿No tienes cuenta?
+
                             <a th:href="@{/registro}">
                                 Regístrate aquí
                             </a>

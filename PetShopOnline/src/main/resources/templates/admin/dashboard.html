@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head}">
+    <title>Dashboard - Admin</title>
+</head>
+
+<body class="admin-body">
+
+<div class="admin-layout">
+
+    <!-- Menú lateral -->
+    <aside th:replace="~{fragmentos :: adminSidebar}"></aside>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+
+        <div class="admin-topbar">
+            <h1 class="admin-page-title">Dashboard</h1>
+        </div>
+
+        <!-- Tarjetas de resumen -->
+        <div class="row g-4 mb-4">
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">📦</div>
+                    <div>
+                        <p class="admin-stat-label">Productos</p>
+                        <p class="admin-stat-value" th:text="${totalProductos}">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">🏷️</div>
+                    <div>
+                        <p class="admin-stat-label">Categorías</p>
+                        <p class="admin-stat-value" th:text="${totalCategorias}">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">🛒</div>
+                    <div>
+                        <p class="admin-stat-label">Pedidos hoy</p>
+                        <p class="admin-stat-value">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">👥</div>
+                    <div>
+                        <p class="admin-stat-label">Usuarios</p>
+                        <p class="admin-stat-value">—</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Acciones rápidas -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5>⚡ Acciones rápidas</h5>
+                    </div>
+                    <div class="admin-card-body d-flex flex-column gap-2">
+                        <a th:href="@{/admin/productos}" class="btn btn-dark">
+                            + Nuevo Producto
+                        </a>
+                        <a th:href="@{/admin/categorias}" class="btn btn-outline-dark">
+                            + Nueva Categoría
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h5>🏷️ Categorías registradas</h5>
+                    </div>
+                    <div class="admin-card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                th:each="cat : ${categorias}">
+                                <span th:text="${cat.nombre}"></span>
+                                <a th:href="@{/admin/categorias/editar/{id}(id=${cat.idCategoria})}"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Editar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de productos recientes -->
+        <div class="admin-card">
+            <div class="admin-card-header d-flex justify-content-between align-items-center">
+                <h5>📦 Catálogo de productos</h5>
+                <a th:href="@{/admin/productos}" class="btn btn-sm btn-dark">Ver todos</a>
+            </div>
+            <div class="admin-card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="prod : ${productos}">
+                            <td th:text="${prod.idProducto}"></td>
+                            <td th:text="${prod.nombre}"></td>
+                            <td th:text="'$' + ${#numbers.formatDecimal(prod.precio, 1, 2)}"></td>
+                            <td>
+                                <a th:href="@{/admin/productos/editar/{id}(id=${prod.idProducto})}"
+                                   class="btn btn-sm btn-outline-dark">
+                                    Editar
+                                </a>
+                                <form th:action="@{/admin/productos/eliminar/{id}(id=${prod.idProducto})}"
+                                      method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('¿Eliminar producto?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

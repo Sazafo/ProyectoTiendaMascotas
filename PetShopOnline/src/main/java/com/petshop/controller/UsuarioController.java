@@ -1,6 +1,7 @@
 package com.petshop.controller;
 
 import com.petshop.domain.Usuario;
+import com.petshop.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UsuarioController {
+
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping("/login")
     public String mostrarLogin() {
@@ -23,21 +30,24 @@ public class UsuarioController {
             HttpSession session,
             Model model) {
 
-        // Login temporal mientras no exista la base de datos
-        if (correo.equals("admin@petshop.com")
-                && password.equals("1234")) {
+        Usuario usuario = usuarioService.buscarPorCorreo(correo);
 
-            Usuario usuario = new Usuario();
-            usuario.setIdUsuario(1);
-            usuario.setNombre("Administrador");
-            usuario.setCorreo(correo);
+        if (usuario != null
+                && usuario.isActivo()
+                && usuario.getPassword().equals(password)) {
 
             session.setAttribute("usuarioSesion", usuario);
+
+            if ("ADMIN".equals(usuario.getRol())) {
+                return "redirect:/admin";
+            }
 
             return "redirect:/perfil";
         }
 
-        model.addAttribute("error", "Correo o contraseña incorrectos");
+        model.addAttribute(
+                "error",
+                "Correo o contraseña incorrectos");
 
         return "login";
     }
@@ -52,22 +62,38 @@ public class UsuarioController {
             @RequestParam String nombre,
             @RequestParam String correo,
             @RequestParam String password,
-            HttpSession session) {
+            HttpSession session,
+            Model model) {
 
-        // Registro temporal mientras no exista la base de datos
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(1);
-        usuario.setNombre(nombre);
-        usuario.setCorreo(correo);
-        usuario.setPassword(password);
+        boolean registrado =
+                usuarioService.registrarUsuario(
+                        nombre,
+                        correo,
+                        password);
 
-        session.setAttribute("usuarioSesion", usuario);
+        if (!registrado) {
+
+            model.addAttribute(
+                    "error",
+                    "El correo ya se encuentra registrado");
+
+            return "registro";
+        }
+
+        Usuario usuario =
+                usuarioService.buscarPorCorreo(correo);
+
+        session.setAttribute(
+                "usuarioSesion",
+                usuario);
 
         return "redirect:/perfil";
     }
 
     @GetMapping("/perfil")
-    public String mostrarPerfil(HttpSession session, Model model) {
+    public String mostrarPerfil(
+            HttpSession session,
+            Model model) {
 
         Usuario usuario =
                 (Usuario) session.getAttribute("usuarioSesion");

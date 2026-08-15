@@ -3,8 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Mi Perfil - PetShop</title>
-    <link rel="stylesheet" th:href="@{/css/usuario.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/usuario.css}">
 </head>
 
 <body>
@@ -14,11 +20,24 @@
     <h2>PetShop Online</h2>
 
     <div>
-        <a th:href="@{/}">Inicio</a>
-        <a th:href="@{/logout}">Cerrar sesión</a>
+
+        <a th:href="@{/}">
+            Inicio
+        </a>
+
+        <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"
+           th:href="@{/admin}">
+            Panel Admin
+        </a>
+
+        <a th:href="@{/logout}">
+            Cerrar sesión
+        </a>
+
     </div>
 
 </div>
+
 
 <div class="contenedor-formulario">
 
@@ -29,6 +48,7 @@
     <p class="subtitulo">
         Información de la cuenta
     </p>
+
 
     <div class="datos-perfil">
 
@@ -59,15 +79,23 @@
                   class="estado-inactivo">
                 Inactivo
             </span>
+
         </p>
 
     </div>
+
 
     <div class="acciones">
 
         <a th:href="@{/cuenta/cambiar-password}"
            class="btn-principal">
             Cambiar contraseña
+        </a>
+
+        <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"
+           th:href="@{/admin}"
+           class="btn-principal">
+            Panel de Administración
         </a>
 
         <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"
@@ -85,9 +113,11 @@
 
 </div>
 
+
 <div class="pie">
     PetShop Online
 </div>
 
 </body>
+
 </html>

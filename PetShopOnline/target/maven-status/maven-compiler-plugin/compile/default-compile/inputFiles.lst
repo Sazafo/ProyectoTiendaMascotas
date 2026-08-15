@@ -1,5 +1,8 @@
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\config\SecurityConfig.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\AdminController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CarritoController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\CuentaController.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\GestionUsuarioController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\IndexController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\ProductoController.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\controller\UsuarioController.java
@@ -10,6 +13,7 @@ C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domai
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Producto.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\domain\Usuario.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\PetShopOnlineApplication.java
+C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\repository\UsuarioRepository.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\CategoriaService.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\PedidoService.java
 C:\Projects\ProyectoTiendaMascotas\PetShopOnline\src\main\java\com\petshop\service\ProductoService.java

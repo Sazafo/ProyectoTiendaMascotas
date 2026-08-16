@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Categorías
+        </h1>
+
+        <p class="text-muted">
+            Explora nuestros productos según las necesidades de tu mascota.
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4"
+             th:each="categoria : ${categorias}">
+
+            <a th:href="@{/productos(categoria=${categoria.idCategoria})}"
+               class="text-decoration-none text-dark">
+
+                <div class="card categoria-card h-100 border-0 shadow-sm">
+
+                    <div class="card-body text-center p-5">
+
+                        <div class="categoria-icono mb-3">
+                            <i class="fa-solid fa-paw"></i>
+                        </div>
+
+                        <h4 class="fw-bold"
+                            th:text="${categoria.nombre}">
+                            Categoría
+                        </h4>
+
+                        <p class="text-muted"
+                           th:text="${categoria.descripcion}">
+                            Descripción
+                        </p>
+
+                        <span class="btn btn-outline-dark mt-2">
+                            Ver productos
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer th:replace="~{fragmentos :: footer}"></footer>
+
+</body>
+</html>

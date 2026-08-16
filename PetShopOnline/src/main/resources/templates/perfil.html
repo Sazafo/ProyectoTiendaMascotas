@@ -92,6 +92,11 @@
             Cambiar contraseña
         </a>
 
+        <a th:href="@{/pedidos}"
+           class="btn-principal">
+            Mis pedidos
+        </a>
+
         <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"
            th:href="@{/admin}"
            class="btn-principal">

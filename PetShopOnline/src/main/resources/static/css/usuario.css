@@ -241,6 +241,31 @@ tbody tr:hover td {
     color: #b02a37;
 }
 
+.estado-pendiente,
+.estado-enviado,
+.estado-entregado {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.estado-pendiente {
+    background-color: #fdf1d3;
+    color: #8a6416;
+}
+
+.estado-enviado {
+    background-color: #d9e8f9;
+    color: #1a5aa3;
+}
+
+.estado-entregado {
+    background-color: #d9f3e5;
+    color: #187545;
+}
+
 .mensaje,
 .error {
     padding: 13px 16px;

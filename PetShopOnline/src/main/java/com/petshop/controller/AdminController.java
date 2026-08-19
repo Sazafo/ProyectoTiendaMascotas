@@ -5,6 +5,7 @@ import com.petshop.domain.Producto;
 import com.petshop.service.CategoriaService;
 import com.petshop.service.PedidoService;
 import com.petshop.service.ProductoService;
+import com.petshop.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -23,15 +24,18 @@ public class AdminController {
     private final ProductoService productoService;
     private final CategoriaService categoriaService;
     private final PedidoService pedidoService;
+    private final UsuarioService usuarioService;
 
     public AdminController(
             ProductoService productoService,
             CategoriaService categoriaService,
-            PedidoService pedidoService) {
+            PedidoService pedidoService,
+            UsuarioService usuarioService) {
 
         this.productoService = productoService;
         this.categoriaService = categoriaService;
         this.pedidoService = pedidoService;
+        this.usuarioService = usuarioService;
     }
 
     // URI actual para marcar el enlace activo en el sidebar
@@ -90,6 +94,11 @@ public class AdminController {
         model.addAttribute(
                 "pedidosRecientes",
                 pedidoService.listarRecientes(5)
+        );
+
+        model.addAttribute(
+                "totalUsuarios",
+                usuarioService.listarUsuarios().size()
         );
 
         model.addAttribute(

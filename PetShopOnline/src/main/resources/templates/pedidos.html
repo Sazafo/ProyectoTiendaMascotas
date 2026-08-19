@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Pedidos - PetShop</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}">
+</head>
+
+<body>
+
+<div class="barra-superior">
+
+    <h2>PetShop Online</h2>
+
+    <div>
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/perfil}">Mi Perfil</a>
+        <a th:href="@{/logout}">Cerrar sesión</a>
+    </div>
+
+</div>
+
+<div class="contenedor-usuario">
+
+    <h2 class="titulo-usuario">
+        Mis Pedidos
+    </h2>
+
+    <p class="subtitulo">
+        Historial de compras realizadas en PetShop Online.
+    </p>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Pedido</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr th:each="pedido : ${pedidos}">
+
+                <td th:text="'#' + ${pedido.idPedido}"></td>
+
+                <td th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+
+                <td th:text="'$' + ${#numbers.formatDecimal(pedido.total, 1, 2)}"></td>
+
+                <td>
+
+                    <span th:if="${pedido.estado == 'PENDIENTE'}" class="estado-pendiente">Pendiente</span>
+                    <span th:if="${pedido.estado == 'ENVIADO'}" class="estado-enviado">Enviado</span>
+                    <span th:if="${pedido.estado == 'ENTREGADO'}" class="estado-entregado">Entregado</span>
+
+                </td>
+
+                <td>
+
+                    <a th:href="@{/pedidos/detalle/{id}(id=${pedido.idPedido})}"
+                       class="btn-principal">
+                        Ver detalle
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(pedidos)}">
+                <td colspan="5" style="text-align: center; color: #77817d;">
+                    Aún no tienes pedidos realizados.
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div style="margin-top: 25px;">
+
+        <a th:href="@{/perfil}" class="btn-secundario">
+            Volver al perfil
+        </a>
+
+    </div>
+
+</div>
+
+<div class="pie">
+    PetShop Online
+</div>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String password;
+    private String direccion;
     private String rol;
     private boolean activo;
 
@@ -13,11 +14,12 @@ public class Usuario {
     }
 
     public Usuario(Integer idUsuario, String nombre, String correo,
-            String password, String rol, boolean activo) {
+            String password, String direccion, String rol, boolean activo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.correo = correo;
         this.password = password;
+        this.direccion = direccion;
         this.rol = rol;
         this.activo = activo;
     }
@@ -52,6 +54,14 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getRol() {

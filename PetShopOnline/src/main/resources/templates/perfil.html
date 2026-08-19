@@ -63,6 +63,11 @@
         </p>
 
         <p>
+            <strong>Dirección:</strong>
+            <span th:text="${usuario.direccion}"></span>
+        </p>
+
+        <p>
             <strong>Rol:</strong>
             <span th:text="${usuario.rol}"></span>
         </p>
@@ -87,14 +92,14 @@
 
     <div class="acciones">
 
+        <a th:href="@{/perfil/editar}"
+           class="btn-principal">
+            Editar perfil
+        </a>
+
         <a th:href="@{/cuenta/cambiar-password}"
            class="btn-principal">
             Cambiar contraseña
-        </a>
-
-        <a th:href="@{/pedidos}"
-           class="btn-principal">
-            Mis pedidos
         </a>
 
         <a th:if="${session.usuarioSesion != null and session.usuarioSesion.rol == 'ADMIN'}"

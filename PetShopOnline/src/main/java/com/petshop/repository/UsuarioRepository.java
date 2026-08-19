@@ -16,7 +16,7 @@ public class UsuarioRepository {
 
     public Usuario buscarPorCorreo(String correo) {
 
-        String sql = "SELECT id_usuario, nombre, correo, password, rol, activo "
+        String sql = "SELECT id_usuario, nombre, correo, password, direccion, rol, activo "
                 + "FROM usuario WHERE correo = ?";
 
         List<Usuario> usuarios = jdbcTemplate.query(
@@ -26,6 +26,7 @@ public class UsuarioRepository {
                         rs.getString("nombre"),
                         rs.getString("correo"),
                         rs.getString("password"),
+                        rs.getString("direccion"),
                         rs.getString("rol"),
                         rs.getBoolean("activo")
                 ),
@@ -41,7 +42,7 @@ public class UsuarioRepository {
 
     public Usuario buscarPorId(Integer idUsuario) {
 
-        String sql = "SELECT id_usuario, nombre, correo, password, rol, activo "
+        String sql = "SELECT id_usuario, nombre, correo, password, direccion, rol, activo "
                 + "FROM usuario WHERE id_usuario = ?";
 
         List<Usuario> usuarios = jdbcTemplate.query(
@@ -51,6 +52,7 @@ public class UsuarioRepository {
                         rs.getString("nombre"),
                         rs.getString("correo"),
                         rs.getString("password"),
+                        rs.getString("direccion"),
                         rs.getString("rol"),
                         rs.getBoolean("activo")
                 ),
@@ -73,7 +75,7 @@ public class UsuarioRepository {
 
     public List<Usuario> listarUsuarios() {
 
-        String sql = "SELECT id_usuario, nombre, correo, password, rol, activo "
+        String sql = "SELECT id_usuario, nombre, correo, password, direccion, rol, activo "
                 + "FROM usuario ORDER BY nombre";
 
         return jdbcTemplate.query(
@@ -83,6 +85,7 @@ public class UsuarioRepository {
                         rs.getString("nombre"),
                         rs.getString("correo"),
                         rs.getString("password"),
+                        rs.getString("direccion"),
                         rs.getString("rol"),
                         rs.getBoolean("activo")
                 )
@@ -95,32 +98,49 @@ public class UsuarioRepository {
 
         jdbcTemplate.update(sql, activo, idUsuario);
     }
+
     public boolean existeCorreo(String correo) {
 
-    String sql = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
+        String sql = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
 
-    Integer cantidad = jdbcTemplate.queryForObject(
-            sql,
-            Integer.class,
-            correo
-    );
+        Integer cantidad = jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                correo
+        );
 
-    return cantidad != null && cantidad > 0;
-}
+        return cantidad != null && cantidad > 0;
+    }
 
     public void registrarUsuario(Usuario usuario) {
 
         String sql = "INSERT INTO usuario "
-            + "(nombre, correo, password, rol, activo) "
-            + "VALUES (?, ?, ?, ?, ?)";
+                + "(nombre, correo, password, direccion, rol, activo) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
 
-    jdbcTemplate.update(
-            sql,
-            usuario.getNombre(),
-            usuario.getCorreo(),
-            usuario.getPassword(),
-            usuario.getRol(),
-            usuario.isActivo()
-    );
-}
+        jdbcTemplate.update(
+                sql,
+                usuario.getNombre(),
+                usuario.getCorreo(),
+                usuario.getPassword(),
+                usuario.getDireccion(),
+                usuario.getRol(),
+                usuario.isActivo()
+        );
+    }
+
+    public void actualizarPerfil(Usuario usuario) {
+
+        String sql = "UPDATE usuario "
+                + "SET nombre = ?, correo = ?, direccion = ? "
+                + "WHERE id_usuario = ?";
+
+        jdbcTemplate.update(
+                sql,
+                usuario.getNombre(),
+                usuario.getCorreo(),
+                usuario.getDireccion(),
+                usuario.getIdUsuario()
+        );
+    }
 }

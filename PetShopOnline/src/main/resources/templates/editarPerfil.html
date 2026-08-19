@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Perfil - PetShop</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/usuario.css}">
+</head>
+
+<body>
+
+<div class="barra-superior">
+
+    <h2>PetShop Online</h2>
+
+    <div>
+        <a th:href="@{/}">
+            Inicio
+        </a>
+
+        <a th:href="@{/perfil}">
+            Mi Perfil
+        </a>
+
+        <a th:href="@{/logout}">
+            Cerrar sesión
+        </a>
+    </div>
+
+</div>
+
+
+<div class="contenedor-formulario">
+
+    <h2 class="titulo-usuario">
+        Editar Perfil
+    </h2>
+
+    <p class="subtitulo">
+        Modifique la información de su cuenta
+    </p>
+
+
+    <form th:action="@{/perfil/editar}"
+          method="post">
+
+        <div class="grupo-formulario">
+
+            <label>
+                Nombre
+            </label>
+
+            <input type="text"
+                   name="nombre"
+                   th:value="${usuario.nombre}"
+                   required>
+
+        </div>
+
+
+        <div class="grupo-formulario">
+
+            <label>
+                Correo electrónico
+            </label>
+
+            <input type="email"
+                   name="correo"
+                   th:value="${usuario.correo}"
+                   required>
+
+        </div>
+
+
+        <div class="grupo-formulario">
+
+            <label>
+                Dirección
+            </label>
+
+            <input type="text"
+                   name="direccion"
+                   th:value="${usuario.direccion}"
+                   required>
+
+        </div>
+
+
+        <div class="acciones">
+
+            <button type="submit"
+                    class="btn-principal">
+                Guardar cambios
+            </button>
+
+            <a th:href="@{/cuenta/cambiar-password}"
+               class="btn-principal">
+                Cambiar contraseña
+            </a>
+
+            <a th:href="@{/perfil}"
+               class="btn-secundario">
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="pie">
+    PetShop Online
+</div>
+
+</body>
+
+</html>

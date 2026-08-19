@@ -62,6 +62,7 @@ public class UsuarioController {
             @RequestParam String nombre,
             @RequestParam String correo,
             @RequestParam String password,
+            @RequestParam String direccion,
             HttpSession session,
             Model model) {
 
@@ -69,7 +70,8 @@ public class UsuarioController {
                 usuarioService.registrarUsuario(
                         nombre,
                         correo,
-                        password);
+                        password,
+                        direccion);
 
         if (!registrado) {
 
@@ -105,6 +107,53 @@ public class UsuarioController {
         model.addAttribute("usuario", usuario);
 
         return "perfil";
+    }
+
+    @GetMapping("/perfil/editar")
+    public String editarPerfil(
+            HttpSession session,
+            Model model) {
+
+        Usuario usuario =
+                (Usuario) session.getAttribute("usuarioSesion");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+
+        return "editarPerfil";
+    }
+
+    @PostMapping("/perfil/editar")
+    public String guardarPerfil(
+            @RequestParam String nombre,
+            @RequestParam String correo,
+            @RequestParam String direccion,
+            HttpSession session) {
+
+        Usuario usuario =
+                (Usuario) session.getAttribute("usuarioSesion");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        usuario.setNombre(nombre);
+        usuario.setCorreo(correo);
+        usuario.setDireccion(direccion);
+
+        usuarioService.actualizarPerfil(usuario);
+
+        Usuario usuarioActualizado =
+                usuarioService.buscarPorId(usuario.getIdUsuario());
+
+        session.setAttribute(
+                "usuarioSesion",
+                usuarioActualizado);
+
+        return "redirect:/perfil";
     }
 
     @GetMapping("/logout")

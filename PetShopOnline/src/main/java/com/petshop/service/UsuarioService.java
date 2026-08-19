@@ -98,25 +98,32 @@ public class UsuarioService {
 
         return true;
     }
+
     public boolean registrarUsuario(
-        String nombre,
-        String correo,
-        String password) {
+            String nombre,
+            String correo,
+            String password,
+            String direccion) {
 
         if (usuarioRepository.existeCorreo(correo)) {
             return false;
-    }
+        }
 
         Usuario usuario = new Usuario();
 
         usuario.setNombre(nombre);
         usuario.setCorreo(correo);
         usuario.setPassword(password);
+        usuario.setDireccion(direccion);
         usuario.setRol("USER");
         usuario.setActivo(true);
 
         usuarioRepository.registrarUsuario(usuario);
 
-    return true;
-}
+        return true;
+    }
+
+    public void actualizarPerfil(Usuario usuario) {
+        usuarioRepository.actualizarPerfil(usuario);
+    }
 }

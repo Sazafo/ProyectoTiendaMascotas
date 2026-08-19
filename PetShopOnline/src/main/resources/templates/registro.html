@@ -29,6 +29,7 @@
                     <form th:action="@{/registro}" method="post">
 
                         <div class="mb-3">
+
                             <label class="form-label">
                                 Nombre
                             </label>
@@ -37,9 +38,11 @@
                                    name="nombre"
                                    class="form-control"
                                    required>
+
                         </div>
 
                         <div class="mb-3">
+
                             <label class="form-label">
                                 Correo electrónico
                             </label>
@@ -48,9 +51,24 @@
                                    name="correo"
                                    class="form-control"
                                    required>
+
                         </div>
 
                         <div class="mb-3">
+
+                            <label class="form-label">
+                                Dirección
+                            </label>
+
+                            <input type="text"
+                                   name="direccion"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+                        <div class="mb-3">
+
                             <label class="form-label">
                                 Contraseña
                             </label>
@@ -59,6 +77,7 @@
                                    name="password"
                                    class="form-control"
                                    required>
+
                         </div>
 
                         <div th:if="${error}"

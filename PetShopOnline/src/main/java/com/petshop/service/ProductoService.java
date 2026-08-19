@@ -2,7 +2,6 @@ package com.petshop.service;
 
 import com.petshop.domain.Producto;
 import com.petshop.repository.ProductoRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -12,59 +11,59 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
 
-    public ProductoService(ProductoRepository productoRepository) {
+    public ProductoService(
+            ProductoRepository productoRepository) {
+
         this.productoRepository = productoRepository;
     }
 
     public List<Producto> listarTodos() {
-        return productoRepository.listarTodos();
+        return productoRepository.findAll();
     }
 
-    public List<Producto> listarPorCategoria(Integer idCategoria) {
+    public List<Producto> listarPorCategoria(
+            Integer idCategoria) {
 
         if (idCategoria == null) {
-            return productoRepository.listarTodos();
+            return productoRepository.findAll();
         }
 
-        return productoRepository.listarPorCategoria(idCategoria);
+        return productoRepository
+                .findByIdCategoria(idCategoria);
     }
 
-    public Optional<Producto> buscarPorId(Integer idProducto) {
-        return productoRepository.buscarPorId(idProducto);
+    public Optional<Producto> buscarPorId(
+            Integer idProducto) {
+
+        return productoRepository
+                .findById(idProducto);
     }
 
     public List<Producto> buscarRelacionados(
             Integer idCategoria,
             Integer idProductoActual) {
 
-        List<Producto> relacionados = new ArrayList<>();
-
         if (idCategoria == null) {
-            return relacionados;
+            return List.of();
         }
 
-        List<Producto> productosCategoria =
-                productoRepository.listarPorCategoria(idCategoria);
-
-        for (Producto producto : productosCategoria) {
-
-            if (!producto.getIdProducto().equals(idProductoActual)) {
-                relacionados.add(producto);
-            }
-        }
-
-        return relacionados;
+        return productoRepository
+                .findByIdCategoriaAndIdProductoNot(
+                        idCategoria,
+                        idProductoActual
+                );
     }
 
     public void guardar(Producto producto) {
-        productoRepository.guardar(producto);
+        productoRepository.save(producto);
     }
 
     public void eliminar(Integer idProducto) {
-        productoRepository.eliminar(idProducto);
+        productoRepository.deleteById(idProducto);
     }
 
     public List<Producto> listarPorPrecio() {
-        return productoRepository.listarPorPrecio();
+        return productoRepository
+                .findAllByOrderByPrecioAsc();
     }
 }

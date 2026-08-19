@@ -1,23 +1,56 @@
 package com.petshop.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido")
     private Integer idPedido;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
-    private List<ItemCarrito> items;
+
+    @Transient
+    private List<ItemCarrito> items = new ArrayList<>();
+
+    @Column(nullable = false)
     private Double total;
+
+    @Column(name = "direccion_envio", nullable = false, length = 300)
     private String direccionEnvio;
+
+    @Column(nullable = false)
     private LocalDateTime fecha;
+
+    @Column(nullable = false)
     private String estado;
 
     public Pedido() {
     }
 
-    public Pedido(Usuario usuario, List<ItemCarrito> items, Double total, String direccionEnvio) {
+    public Pedido(
+            Usuario usuario,
+            List<ItemCarrito> items,
+            Double total,
+            String direccionEnvio) {
+
         this.usuario = usuario;
         this.items = items;
         this.total = total;

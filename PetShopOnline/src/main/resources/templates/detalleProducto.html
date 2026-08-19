@@ -1,269 +1,539 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head th:replace="~{fragmentos :: head}"></head>
+<head th:replace="~{fragmentos :: head}"></head>
 
-    <body>
+<body>
 
-        <header th:replace="~{fragmentos :: header}"></header>
+<header th:replace="~{fragmentos :: header}"></header>
 
-        <main class="container py-5">
+<main class="container py-5">
 
-            <!-- VOLVER -->
-            <div class="mb-4">
+    <!-- VOLVER -->
+    <div class="mb-4">
+        <a th:href="@{/productos}"
+           class="text-decoration-none text-dark">
 
-                <a th:href="@{/productos}"
-                   class="text-decoration-none text-dark">
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            Volver a productos
 
-                    <i class="fa-solid fa-arrow-left me-2"></i>
-                    Volver a productos
+        </a>
+    </div>
 
-                </a>
+
+    <!-- ========================================================= -->
+    <!-- DETALLE PRINCIPAL -->
+    <!-- ========================================================= -->
+
+    <section class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+        <div class="row g-0">
+
+            <!-- IMAGEN -->
+            <div class="col-lg-6">
+
+                <div class="p-4 p-lg-5 text-center bg-light h-100
+                            d-flex align-items-center justify-content-center">
+
+                    <img th:src="${producto.imagen}"
+                         th:alt="${producto.nombre}"
+                         class="img-fluid rounded-4"
+                         style="max-height: 450px;
+                                width: 100%;
+                                object-fit: contain;">
+
+                </div>
 
             </div>
 
 
-            <!-- DETALLE PRINCIPAL -->
-            <section class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <!-- INFORMACIÓN -->
+            <div class="col-lg-6">
 
-                <div class="row g-0">
+                <div class="p-4 p-lg-5">
 
-                    <!-- IMAGEN -->
-                    <div class="col-lg-6">
+                    <!-- CATEGORÍA -->
 
-                        <div class="p-4 p-lg-5 text-center bg-light h-100
-                             d-flex align-items-center justify-content-center">
+                    <a th:if="${categoria != null}"
+                       th:href="@{/productos(categoria=${categoria.idCategoria})}"
+                       class="text-decoration-none">
 
-                            <img th:src="${producto.imagen}"
-                                 th:alt="${producto.nombre}"
-                                 class="img-fluid rounded-4"
-                                 style="max-height: 450px;
-                                 width: 100%;
-                                 object-fit: contain;">
+                        <span class="badge text-bg-dark mb-3"
+                              th:text="${categoria.nombre}">
+                            Categoría
+                        </span>
+
+                    </a>
+
+
+                    <!-- NOMBRE -->
+
+                    <h1 class="fw-bold mb-3"
+                        th:text="${producto.nombre}">
+                        Producto
+                    </h1>
+
+
+                    <!-- DESCRIPCIÓN -->
+
+                    <p class="text-muted fs-5 mb-4"
+                       th:text="${producto.descripcion}">
+                        Descripción
+                    </p>
+
+                    <hr>
+
+
+                    <!-- PRECIO -->
+
+                    <div class="my-4">
+
+                        <p class="text-muted mb-1">
+                            Precio
+                        </p>
+
+                        <h2 class="fw-bold"
+                            th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">
+                            $0.00
+                        </h2>
+
+                    </div>
+
+
+                    <!-- STOCK -->
+
+                    <div class="mb-4">
+
+                        <p class="text-muted mb-2">
+                            Disponibilidad
+                        </p>
+
+
+                        <!-- Stock suficiente -->
+
+                        <span th:if="${producto.stock != null and producto.stock > 5}"
+                              class="badge bg-success fs-6">
+
+                            <i class="fa-solid fa-check me-1"></i>
+
+                            <span th:text="${producto.stock}">
+                                20
+                            </span>
+
+                            disponibles
+
+                        </span>
+
+
+                        <!-- Stock bajo -->
+
+                        <span th:if="${producto.stock != null
+                                and producto.stock > 0
+                                and producto.stock <= 5}"
+                              class="badge bg-warning text-dark fs-6">
+
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+
+                            Solo quedan
+
+                            <span th:text="${producto.stock}">
+                                5
+                            </span>
+
+                        </span>
+
+
+                        <!-- Agotado -->
+
+                        <span th:if="${producto.stock == null or producto.stock == 0}"
+                              class="badge bg-danger fs-6">
+
+                            <i class="fa-solid fa-xmark me-1"></i>
+                            Producto agotado
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- CARRITO -->
+
+                    <form th:action="@{/carrito/agregar}"
+                          method="post"
+                          th:if="${producto.stock != null and producto.stock > 0}">
+
+                        <input type="hidden"
+                               name="idProducto"
+                               th:value="${producto.idProducto}">
+
+
+                        <div class="mb-4">
+
+                            <label for="cantidad"
+                                   class="form-label fw-semibold">
+
+                                Cantidad
+
+                            </label>
+
+                            <input type="number"
+                                   id="cantidad"
+                                   name="cantidad"
+                                   value="1"
+                                   min="1"
+                                   th:max="${producto.stock}"
+                                   class="form-control form-control-lg"
+                                   style="max-width: 130px;">
+
+                        </div>
+
+
+                        <button type="submit"
+                                class="btn btn-dark btn-lg w-100">
+
+                            <i class="fa-solid fa-cart-shopping me-2"></i>
+                            Agregar al carrito
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- BOTÓN AGOTADO -->
+
+                    <button th:if="${producto.stock == null or producto.stock == 0}"
+                            class="btn btn-secondary btn-lg w-100"
+                            disabled>
+
+                        Producto agotado
+
+                    </button>
+
+
+                    <!-- INFO EXTRA -->
+
+                    <div class="row mt-4 g-3">
+
+                        <div class="col-6">
+
+                            <div class="border rounded-3 p-3 text-center h-100">
+
+                                <i class="fa-solid fa-truck mb-2"></i>
+
+                                <p class="small mb-0">
+                                    Entrega rápida
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="border rounded-3 p-3 text-center h-100">
+
+                                <i class="fa-solid fa-paw mb-2"></i>
+
+                                <p class="small mb-0">
+                                    Pensado para tu mascota
+                                </p>
+
+                            </div>
 
                         </div>
 
                     </div>
 
+                </div>
 
-                    <!-- INFORMACIÓN -->
-                    <div class="col-lg-6">
+            </div>
 
-                        <div class="p-4 p-lg-5">
+        </div>
 
-                            <a th:if="${categoria != null}"
-                               th:href="@{/productos(categoria=${categoria.idCategoria})}"
-                               class="text-decoration-none">
-
-                                <span class="badge text-bg-dark mb-3"
-                                      th:text="${categoria.nombre}">
-                                    Categoría
-                                </span>
-
-                            </a>
+    </section>
 
 
-                            <h1 class="fw-bold mb-3"
-                                th:text="${producto.nombre}">
+    <!-- ========================================================= -->
+    <!-- RESEÑAS -->
+    <!-- ========================================================= -->
 
-                                Producto
+    <section class="mt-5">
 
-                            </h1>
+        <div class="row g-4">
+
+            <!-- FORMULARIO DE RESEÑA -->
+
+            <div class="col-lg-5">
+
+                <div class="card border-0 shadow-sm rounded-4">
+
+                    <div class="card-body p-4">
+
+                        <h3 class="fw-bold mb-3">
+                            Deja tu opinión
+                        </h3>
 
 
-                            <p class="text-muted fs-5 mb-4"
-                               th:text="${producto.descripcion}">
+                        <!-- MENSAJE CORRECTO -->
 
-                                Descripción
+                        <div th:if="${mensajeResena != null}"
+                             class="alert alert-success"
+                             th:text="${mensajeResena}">
+                        </div>
 
+
+                        <!-- MENSAJE ERROR -->
+
+                        <div th:if="${errorResena != null}"
+                             class="alert alert-danger"
+                             th:text="${errorResena}">
+                        </div>
+
+
+                        <!-- USUARIO LOGUEADO -->
+
+                        <div th:if="${usuarioSesion != null}">
+
+                            <p class="text-muted">
+                                Comparte tu experiencia con este producto.
                             </p>
 
 
-                            <hr>
-
-
-                            <!-- PRECIO -->
-                            <div class="my-4">
-
-                                <p class="text-muted mb-1">
-                                    Precio
-                                </p>
-
-                                <h2 class="fw-bold"
-                                    th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">
-
-                                    $0.00
-
-                                </h2>
-
-                            </div>
-
-
-                            <!-- CARRITO -->
-                            <form th:action="@{/carrito/agregar}"
+                            <form th:action="@{/productos/{id}/resena(id=${producto.idProducto})}"
                                   method="post">
 
-                                <input type="hidden"
-                                       name="idProducto"
-                                       th:value="${producto.idProducto}">
 
+                                <!-- CALIFICACIÓN -->
 
-                                <div class="mb-4">
+                                <div class="mb-3">
 
-                                    <label for="cantidad"
-                                           class="form-label fw-semibold">
-
-                                        Cantidad
-
+                                    <label class="form-label fw-semibold">
+                                        Calificación
                                     </label>
 
-                                    <input type="number"
-                                           id="cantidad"
-                                           name="cantidad"
-                                           value="1"
-                                           min="1"
-                                           class="form-control form-control-lg"
-                                           style="max-width: 130px;">
+                                    <select name="calificacion"
+                                            class="form-select"
+                                            required>
+
+                                        <option value="">
+                                            Selecciona una calificación
+                                        </option>
+
+                                        <option value="5">
+                                            ★★★★★ - Excelente
+                                        </option>
+
+                                        <option value="4">
+                                            ★★★★☆ - Muy bueno
+                                        </option>
+
+                                        <option value="3">
+                                            ★★★☆☆ - Bueno
+                                        </option>
+
+                                        <option value="2">
+                                            ★★☆☆☆ - Regular
+                                        </option>
+
+                                        <option value="1">
+                                            ★☆☆☆☆ - Malo
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- COMENTARIO -->
+
+                                <div class="mb-3">
+
+                                    <label class="form-label fw-semibold">
+                                        Comentario
+                                    </label>
+
+                                    <textarea name="comentario"
+                                              class="form-control"
+                                              rows="4"
+                                              maxlength="500"
+                                              placeholder="Cuéntanos qué te pareció el producto..."></textarea>
+
+                                    <div class="form-text">
+                                        Máximo 500 caracteres.
+                                    </div>
 
                                 </div>
 
 
                                 <button type="submit"
-                                        class="btn btn-dark btn-lg w-100">
+                                        class="btn btn-dark w-100">
 
-                                    <i class="fa-solid fa-cart-shopping me-2"></i>
-                                    Agregar al carrito
+                                    <i class="fa-solid fa-star me-2"></i>
+                                    Publicar reseña
 
                                 </button>
 
                             </form>
 
-
-                            <!-- INFO EXTRA -->
-                            <div class="row mt-4 g-3">
-
-                                <div class="col-6">
-
-                                    <div class="border rounded-3 p-3 text-center h-100">
-
-                                        <i class="fa-solid fa-truck mb-2"></i>
-
-                                        <p class="small mb-0">
-                                            Entrega rápida
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="col-6">
-
-                                    <div class="border rounded-3 p-3 text-center h-100">
-
-                                        <i class="fa-solid fa-paw mb-2"></i>
-
-                                        <p class="small mb-0">
-                                            Pensado para tu mascota
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
                         </div>
 
-                    </div>
 
-                </div>
+                        <!-- SIN LOGIN -->
 
-            </section>
+                        <div th:if="${usuarioSesion == null}"
+                             class="text-center py-4">
 
+                            <i class="fa-regular fa-user fa-2x mb-3 text-muted"></i>
 
-            <!-- PRODUCTOS RELACIONADOS -->
-            <section class="mt-5"
-                     th:if="${relacionados != null and !#lists.isEmpty(relacionados)}">
+                            <p class="text-muted mb-3">
+                                Debes iniciar sesión para dejar una reseña.
+                            </p>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                            <a th:href="@{/login}"
+                               class="btn btn-outline-dark">
 
-                    <div>
-
-                        <h2 class="fw-bold mb-1">
-                            También te puede interesar
-                        </h2>
-
-                        <p class="text-muted mb-0">
-                            Otros productos similares para tu mascota.
-                        </p>
-
-                    </div>
-
-                    <a th:href="@{/productos(categoria=${producto.idCategoria})}"
-                       class="btn btn-outline-dark">
-
-                        Ver categoría
-
-                    </a>
-
-                </div>
-
-
-                <div class="row g-4">
-
-                    <div class="col-sm-6 col-md-4 col-lg-3"
-                         th:each="relacionado : ${relacionados}">
-
-                        <div class="card producto-card h-100 border-0 shadow-sm">
-
-
-                            <!-- IMAGEN -->
-                            <a th:href="@{/productos/detalle/{id}(id=${relacionado.idProducto})}">
-
-                                <img th:src="${relacionado.imagen}"
-                                     th:alt="${relacionado.nombre}"
-                                     class="card-img-top producto-img">
+                                Iniciar sesión
 
                             </a>
 
+                        </div>
 
-                            <div class="card-body d-flex flex-column">
+                    </div>
 
+                </div>
 
-                                <h5 class="fw-bold"
-                                    th:text="${relacionado.nombre}">
-
-                                    Producto
-
-                                </h5>
+            </div>
 
 
-                                <p class="text-muted"
-                                   th:text="${relacionado.descripcion}">
+            <!-- LISTA DE RESEÑAS -->
 
-                                    Descripción
+            <div class="col-lg-7">
 
-                                </p>
+                <div class="card border-0 shadow-sm rounded-4">
 
-
-                                <p class="precio mt-auto"
-                                   th:text="'$' + ${#numbers.formatDecimal(relacionado.precio, 1, 2)}">
-
-                                    $0.00
-
-                                </p>
+                    <div class="card-body p-4">
 
 
-                                <a th:href="@{/productos/detalle/{id}(id=${relacionado.idProducto})}"
-                                   class="btn btn-outline-dark w-100">
+                        <div class="d-flex justify-content-between
+                                    align-items-center mb-4">
 
-                                    <i class="fa-solid fa-eye me-2"></i>
-                                    Ver producto
+                            <h3 class="fw-bold mb-0">
+                                Opiniones
+                            </h3>
 
-                                </a>
+                            <span class="badge bg-dark"
+                                  th:text="${#lists.size(resenas)} + ' reseñas'">
+
+                                0 reseñas
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- SIN RESEÑAS -->
+
+                        <div th:if="${#lists.isEmpty(resenas)}"
+                             class="text-center text-muted py-5">
+
+                            <i class="fa-regular fa-star fa-3x mb-3"></i>
+
+                            <h5>
+                                Todavía no hay reseñas
+                            </h5>
+
+                            <p class="mb-0">
+                                Sé el primero en compartir tu opinión.
+                            </p>
+
+                        </div>
+
+
+                        <!-- RESEÑAS -->
+
+                        <div th:each="resena : ${resenas}"
+                             class="border-bottom pb-4 mb-4">
+
+
+                            <div class="d-flex justify-content-between
+                                        align-items-start">
+
+
+                                <!-- USUARIO -->
+
+                                <div>
+
+                                    <div class="d-flex align-items-center gap-2">
+
+                                        <i class="fa-solid fa-circle-user fa-lg"></i>
+
+                                        <strong th:text="${resena.usuario.nombre}">
+                                            Usuario
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- ESTRELLAS -->
+
+                                    <div class="mt-2">
+
+                                        <span class="text-warning"
+                                              th:each="i : ${#numbers.sequence(1, resena.calificacion)}">
+
+                                            ★
+
+                                        </span>
+
+
+                                        <span th:if="${resena.calificacion < 5}"
+                                              class="text-secondary"
+                                              th:each="i : ${#numbers.sequence(resena.calificacion + 1, 5)}">
+
+                                            ☆
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- CALIFICACIÓN NUMÉRICA -->
+
+                                <span class="badge bg-light text-dark border">
+
+                                    <span th:text="${resena.calificacion}">
+                                        5
+                                    </span>
+
+                                    / 5
+
+                                </span>
 
                             </div>
+
+
+                            <!-- COMENTARIO -->
+
+                            <p th:if="${resena.comentario != null
+                                    and !#strings.isEmpty(resena.comentario)}"
+                               class="mt-3 mb-0"
+                               th:text="${resena.comentario}">
+
+                                Comentario
+
+                            </p>
+
+
+                            <p th:if="${resena.comentario == null
+                                    or #strings.isEmpty(resena.comentario)}"
+                               class="mt-3 mb-0 text-muted fst-italic">
+
+                                Sin comentario.
+
+                            </p>
 
                         </div>
 
@@ -271,29 +541,159 @@
 
                 </div>
 
-            </section>
+            </div>
+
+        </div>
+
+    </section>
 
 
-            <!-- CONTINUAR EXPLORANDO -->
-            <div class="text-center mt-5">
+    <!-- ========================================================= -->
+    <!-- PRODUCTOS RELACIONADOS -->
+    <!-- ========================================================= -->
 
-                <p class="text-muted mb-3">
-                    ¿Quieres seguir explorando?
+    <section class="mt-5"
+             th:if="${relacionados != null and !#lists.isEmpty(relacionados)}">
+
+
+        <div class="d-flex justify-content-between
+                    align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    También te puede interesar
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Otros productos similares para tu mascota.
                 </p>
-
-                <a th:href="@{/productos}"
-                   class="btn btn-dark">
-
-                    Ver todos los productos
-
-                </a>
 
             </div>
 
-        </main>
+
+            <a th:href="@{/productos(categoria=${producto.idCategoria})}"
+               class="btn btn-outline-dark">
+
+                Ver categoría
+
+            </a>
+
+        </div>
 
 
-        <footer th:replace="~{fragmentos :: footer}"></footer>
+        <div class="row g-4">
 
-    </body>
+
+            <div class="col-sm-6 col-md-4 col-lg-3"
+                 th:each="relacionado : ${relacionados}">
+
+
+                <div class="card producto-card h-100 border-0 shadow-sm">
+
+
+                    <!-- IMAGEN -->
+
+                    <a th:href="@{/productos/detalle/{id}(id=${relacionado.idProducto})}">
+
+                        <img th:src="${relacionado.imagen}"
+                             th:alt="${relacionado.nombre}"
+                             class="card-img-top producto-img">
+
+                    </a>
+
+
+                    <div class="card-body d-flex flex-column">
+
+
+                        <h5 class="fw-bold"
+                            th:text="${relacionado.nombre}">
+
+                            Producto
+
+                        </h5>
+
+
+                        <p class="text-muted"
+                           th:text="${relacionado.descripcion}">
+
+                            Descripción
+
+                        </p>
+
+
+                        <p class="precio mt-auto"
+                           th:text="'$' + ${#numbers.formatDecimal(relacionado.precio, 1, 2)}">
+
+                            $0.00
+
+                        </p>
+
+
+                        <!-- STOCK RELACIONADO -->
+
+                        <div class="mb-3">
+
+                            <span th:if="${relacionado.stock != null and relacionado.stock > 0}"
+                                  class="badge bg-success">
+
+                                Disponible
+
+                            </span>
+
+                            <span th:if="${relacionado.stock == null or relacionado.stock == 0}"
+                                  class="badge bg-danger">
+
+                                Agotado
+
+                            </span>
+
+                        </div>
+
+
+                        <a th:href="@{/productos/detalle/{id}(id=${relacionado.idProducto})}"
+                           class="btn btn-outline-dark w-100">
+
+                            <i class="fa-solid fa-eye me-2"></i>
+                            Ver producto
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- CONTINUAR EXPLORANDO -->
+    <!-- ========================================================= -->
+
+    <div class="text-center mt-5">
+
+        <p class="text-muted mb-3">
+            ¿Quieres seguir explorando?
+        </p>
+
+        <a th:href="@{/productos}"
+           class="btn btn-dark">
+
+            Ver todos los productos
+
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer th:replace="~{fragmentos :: footer}"></footer>
+
+</body>
+
 </html>

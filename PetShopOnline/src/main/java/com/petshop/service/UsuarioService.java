@@ -14,98 +14,48 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    // =====================================================
+    // BUSCAR POR CORREO
+    // =====================================================
     public Usuario buscarPorCorreo(String correo) {
-        return usuarioRepository.buscarPorCorreo(correo);
+
+        return usuarioRepository
+                .findByCorreo(correo)
+                .orElse(null);
     }
 
+
+    // =====================================================
+    // BUSCAR POR ID
+    // =====================================================
     public Usuario buscarPorId(Integer idUsuario) {
-        return usuarioRepository.buscarPorId(idUsuario);
+
+        return usuarioRepository
+                .findById(idUsuario)
+                .orElse(null);
     }
 
-    public boolean cambiarPassword(
-            Integer idUsuario,
-            String passwordActual,
-            String passwordNueva) {
 
-        Usuario usuario = usuarioRepository.buscarPorId(idUsuario);
-
-        if (usuario == null) {
-            return false;
-        }
-
-        if (!usuario.getPassword().equals(passwordActual)) {
-            return false;
-        }
-
-        usuarioRepository.cambiarPassword(
-                idUsuario,
-                passwordNueva);
-
-        return true;
-    }
-
-    public boolean cambiarPasswordAdmin(
-            Integer idUsuario,
-            String passwordNueva) {
-
-        Usuario usuario = usuarioRepository.buscarPorId(idUsuario);
-
-        if (usuario == null) {
-            return false;
-        }
-
-        usuarioRepository.cambiarPassword(
-                idUsuario,
-                passwordNueva);
-
-        return true;
-    }
-
-    public boolean recuperarPassword(
-            String correo,
-            String passwordNueva) {
-
-        Usuario usuario = usuarioRepository.buscarPorCorreo(correo);
-
-        if (usuario == null) {
-            return false;
-        }
-
-        usuarioRepository.cambiarPassword(
-                usuario.getIdUsuario(),
-                passwordNueva);
-
-        return true;
-    }
-
+    // =====================================================
+    // LISTAR USUARIOS
+    // =====================================================
     public List<Usuario> listarUsuarios() {
-        return usuarioRepository.listarUsuarios();
+
+        return usuarioRepository.findAll();
     }
 
-    public boolean cambiarEstado(
-            Integer idUsuario,
-            boolean activo) {
 
-        Usuario usuario = usuarioRepository.buscarPorId(idUsuario);
-
-        if (usuario == null) {
-            return false;
-        }
-
-        usuarioRepository.cambiarEstado(
-                idUsuario,
-                activo);
-
-        return true;
-    }
-
+    // =====================================================
+    // REGISTRAR USUARIO
+    // =====================================================
     public boolean registrarUsuario(
             String nombre,
             String correo,
             String password,
             String direccion) {
 
-        if (usuarioRepository.existeCorreo(correo)) {
+        // Verifica que el correo no exista
+        if (usuarioRepository.existsByCorreo(correo)) {
             return false;
         }
 
@@ -118,12 +68,106 @@ public class UsuarioService {
         usuario.setRol("USER");
         usuario.setActivo(true);
 
-        usuarioRepository.registrarUsuario(usuario);
+        usuarioRepository.save(usuario);
 
         return true;
     }
 
+
+    // =====================================================
+    // ACTUALIZAR PERFIL
+    // =====================================================
     public void actualizarPerfil(Usuario usuario) {
-        usuarioRepository.actualizarPerfil(usuario);
+
+        usuarioRepository.save(usuario);
+    }
+
+
+    // =====================================================
+    // CAMBIAR CONTRASEÑA
+    // =====================================================
+    public boolean cambiarPassword(
+            Integer idUsuario,
+            String passwordActual,
+            String passwordNueva) {
+
+        Usuario usuario = buscarPorId(idUsuario);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        if (!usuario.getPassword().equals(passwordActual)) {
+            return false;
+        }
+
+        usuario.setPassword(passwordNueva);
+
+        usuarioRepository.save(usuario);
+
+        return true;
+    }
+
+
+    // =====================================================
+    // CAMBIAR CONTRASEÑA ADMIN
+    // =====================================================
+    public boolean cambiarPasswordAdmin(
+            Integer idUsuario,
+            String passwordNueva) {
+
+        Usuario usuario = buscarPorId(idUsuario);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        usuario.setPassword(passwordNueva);
+
+        usuarioRepository.save(usuario);
+
+        return true;
+    }
+
+
+    // =====================================================
+    // RECUPERAR CONTRASEÑA
+    // =====================================================
+    public boolean recuperarPassword(
+            String correo,
+            String passwordNueva) {
+
+        Usuario usuario = buscarPorCorreo(correo);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        usuario.setPassword(passwordNueva);
+
+        usuarioRepository.save(usuario);
+
+        return true;
+    }
+
+
+    // =====================================================
+    // ACTIVAR / DESACTIVAR USUARIO
+    // =====================================================
+    public boolean cambiarEstado(
+            Integer idUsuario,
+            boolean activo) {
+
+        Usuario usuario = buscarPorId(idUsuario);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        usuario.setActivo(activo);
+
+        usuarioRepository.save(usuario);
+
+        return true;
     }
 }

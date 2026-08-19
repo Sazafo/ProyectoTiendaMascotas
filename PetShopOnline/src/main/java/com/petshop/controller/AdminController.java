@@ -2,6 +2,7 @@ package com.petshop.controller;
 
 import com.petshop.domain.Categoria;
 import com.petshop.domain.Producto;
+import com.petshop.domain.Usuario;
 import com.petshop.service.CategoriaService;
 import com.petshop.service.PedidoService;
 import com.petshop.service.ProductoService;
@@ -38,7 +39,6 @@ public class AdminController {
         this.usuarioService = usuarioService;
     }
 
-    // URI actual para marcar el enlace activo en el sidebar
     @ModelAttribute
     public void agregarUriActual(
             HttpServletRequest request,
@@ -50,12 +50,16 @@ public class AdminController {
         );
     }
 
-    // Comprueba si existe un usuario autenticado
-    private boolean noAutenticado(HttpSession session) {
+    private boolean noEsAdmin(HttpSession session) {
 
-        return session.getAttribute("usuarioSesion") == null;
+        Usuario usuario =
+                (Usuario) session.getAttribute(
+                        "usuarioSesion"
+                );
+
+        return usuario == null
+                || !"ADMIN".equals(usuario.getRol());
     }
-
 
     // =========================================================
     // DASHBOARD
@@ -66,24 +70,18 @@ public class AdminController {
             HttpSession session,
             Model model) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
-        int totalProductos =
-                productoService.listarTodos().size();
-
-        int totalCategorias =
-                categoriaService.listarTodas().size();
-
         model.addAttribute(
                 "totalProductos",
-                totalProductos
+                productoService.listarTodos().size()
         );
 
         model.addAttribute(
                 "totalCategorias",
-                totalCategorias
+                categoriaService.listarTodas().size()
         );
 
         model.addAttribute(
@@ -114,9 +112,8 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-
     // =========================================================
-    // CRUD PRODUCTOS
+    // PRODUCTOS
     // =========================================================
 
     @GetMapping("/productos")
@@ -124,7 +121,7 @@ public class AdminController {
             HttpSession session,
             Model model) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -138,14 +135,16 @@ public class AdminController {
                 categoriaService.listarTodas()
         );
 
+        Producto producto = new Producto();
+        producto.setStock(0);
+
         model.addAttribute(
                 "producto",
-                new Producto()
+                producto
         );
 
         return "admin/productos";
     }
-
 
     @GetMapping("/productos/editar/{id}")
     public String editarProducto(
@@ -153,7 +152,7 @@ public class AdminController {
             HttpSession session,
             Model model) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -179,7 +178,6 @@ public class AdminController {
         return "admin/productos";
     }
 
-
     @PostMapping("/productos/guardar")
     public String guardarProducto(
             @RequestParam(required = false) Integer idProducto,
@@ -188,9 +186,10 @@ public class AdminController {
             @RequestParam Double precio,
             @RequestParam String imagen,
             @RequestParam(required = false) Integer idCategoria,
+            @RequestParam Integer stock,
             HttpSession session) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -202,19 +201,19 @@ public class AdminController {
         producto.setPrecio(precio);
         producto.setImagen(imagen);
         producto.setIdCategoria(idCategoria);
+        producto.setStock(stock);
 
         productoService.guardar(producto);
 
         return "redirect:/admin/productos";
     }
 
-
     @PostMapping("/productos/eliminar/{id}")
     public String eliminarProducto(
             @PathVariable Integer id,
             HttpSession session) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -223,9 +222,8 @@ public class AdminController {
         return "redirect:/admin/productos";
     }
 
-
     // =========================================================
-    // CRUD CATEGORÍAS
+    // CATEGORÍAS
     // =========================================================
 
     @GetMapping("/categorias")
@@ -233,7 +231,7 @@ public class AdminController {
             HttpSession session,
             Model model) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -250,14 +248,13 @@ public class AdminController {
         return "admin/categorias";
     }
 
-
     @GetMapping("/categorias/editar/{id}")
     public String editarCategoria(
             @PathVariable Integer id,
             HttpSession session,
             Model model) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -281,7 +278,6 @@ public class AdminController {
         return "admin/categorias";
     }
 
-
     @PostMapping("/categorias/guardar")
     public String guardarCategoria(
             @RequestParam(required = false) Integer idCategoria,
@@ -289,7 +285,7 @@ public class AdminController {
             @RequestParam String descripcion,
             HttpSession session) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 
@@ -304,13 +300,12 @@ public class AdminController {
         return "redirect:/admin/categorias";
     }
 
-
     @PostMapping("/categorias/eliminar/{id}")
     public String eliminarCategoria(
             @PathVariable Integer id,
             HttpSession session) {
 
-        if (noAutenticado(session)) {
+        if (noEsAdmin(session)) {
             return "redirect:/login";
         }
 

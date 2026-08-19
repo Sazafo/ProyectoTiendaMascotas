@@ -10,23 +10,30 @@ public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
 
-    public CategoriaService(CategoriaRepository categoriaRepository) {
-        this.categoriaRepository = categoriaRepository;
+    public CategoriaService(
+            CategoriaRepository categoriaRepository) {
+
+        this.categoriaRepository =
+                categoriaRepository;
     }
 
     public List<Categoria> listarTodas() {
-        return categoriaRepository.listarTodas();
+        return categoriaRepository.findAll();
     }
 
-    public Categoria buscarPorId(Integer idCategoria) {
-        return categoriaRepository.buscarPorId(idCategoria);
+    public Categoria buscarPorId(
+            Integer idCategoria) {
+
+        return categoriaRepository
+                .findById(idCategoria)
+                .orElse(null);
     }
 
     public void guardar(Categoria categoria) {
-        categoriaRepository.guardar(categoria);
+        categoriaRepository.save(categoria);
     }
 
     public void eliminar(Integer idCategoria) {
-        categoriaRepository.eliminar(idCategoria);
+        categoriaRepository.deleteById(idCategoria);
     }
 }

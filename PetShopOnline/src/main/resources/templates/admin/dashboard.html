@@ -46,7 +46,7 @@
                     <div class="admin-stat-icon">🛒</div>
                     <div>
                         <p class="admin-stat-label">Pedidos hoy</p>
-                        <p class="admin-stat-value">—</p>
+                        <p class="admin-stat-value" th:text="${pedidosHoy}">0</p>
                     </div>
                 </div>
             </div>
@@ -99,6 +99,46 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Tabla de pedidos recientes -->
+        <div class="admin-card mb-4">
+            <div class="admin-card-header d-flex justify-content-between align-items-center">
+                <h5>🛒 Pedidos recientes</h5>
+                <a th:href="@{/admin/pedidos}" class="btn btn-sm btn-dark">Ver todos</a>
+            </div>
+            <div class="admin-card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pedido : ${pedidosRecientes}">
+                            <td th:text="${pedido.idPedido}"></td>
+                            <td th:text="${pedido.usuario.nombre}"></td>
+                            <td th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="'$' + ${#numbers.formatDecimal(pedido.total, 1, 2)}"></td>
+                            <td>
+                                <span th:if="${pedido.estado == 'PENDIENTE'}" class="badge bg-warning text-dark">Pendiente</span>
+                                <span th:if="${pedido.estado == 'ENVIADO'}" class="badge bg-info text-dark">Enviado</span>
+                                <span th:if="${pedido.estado == 'ENTREGADO'}" class="badge bg-success">Entregado</span>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(pedidosRecientes)}">
+                            <td colspan="5" class="text-center text-muted py-3">
+                                Aún no hay pedidos registrados.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 

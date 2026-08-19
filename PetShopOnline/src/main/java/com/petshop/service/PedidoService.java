@@ -3,7 +3,9 @@ package com.petshop.service;
 import com.petshop.domain.Pedido;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -62,5 +64,33 @@ public class PedidoService {
         pedido.setEstado(estado);
 
         return true;
+    }
+
+    public int contarPedidosHoy() {
+
+        LocalDate hoy = LocalDate.now();
+
+        int contador = 0;
+
+        for (Pedido pedido : pedidos) {
+            if (pedido.getFecha().toLocalDate().equals(hoy)) {
+                contador++;
+            }
+        }
+
+        return contador;
+    }
+
+    public List<Pedido> listarRecientes(int cantidad) {
+
+        List<Pedido> ordenados = new ArrayList<>(pedidos);
+
+        ordenados.sort(Comparator.comparing(Pedido::getFecha).reversed());
+
+        if (ordenados.size() > cantidad) {
+            return ordenados.subList(0, cantidad);
+        }
+
+        return ordenados;
     }
 }

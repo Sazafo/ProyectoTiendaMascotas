@@ -54,6 +54,51 @@
                                   placeholder="Calle, número, ciudad, provincia..."></textarea>
                     </div>
 
+                    <div class="mb-3">
+
+                        <label class="form-label d-block">Método de pago</label>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="metodoPago"
+                                   id="pagoTarjeta"
+                                   value="TARJETA"
+                                   checked
+                                   onclick="mostrarCampoTarjeta()">
+                            <label class="form-check-label" for="pagoTarjeta">
+                                Tarjeta
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="metodoPago"
+                                   id="pagoSinpe"
+                                   value="SINPE"
+                                   onclick="mostrarCampoTarjeta()">
+                            <label class="form-check-label" for="pagoSinpe">
+                                SINPE Móvil
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3" id="campoTarjeta">
+                        <label class="form-label">Número de tarjeta</label>
+                        <input type="text"
+                               name="numeroTarjeta"
+                               class="form-control"
+                               maxlength="19"
+                               placeholder="0000 0000 0000 0000">
+                    </div>
+
+                    <div class="mb-3 alert alert-info d-none" id="campoSinpe">
+                        Realiza el pago por SINPE Móvil al número
+                        <strong>7286-2819</strong> y confirma tu pedido.
+                    </div>
+
                     <button type="submit" class="btn btn-dark btn-lg w-100">
                         Confirmar pedido
                     </button>
@@ -92,6 +137,16 @@
 </main>
 
 <footer th:replace="~{fragmentos :: footer}"></footer>
+
+<script>
+    function mostrarCampoTarjeta() {
+
+        var esTarjeta = document.getElementById('pagoTarjeta').checked;
+
+        document.getElementById('campoTarjeta').classList.toggle('d-none', !esTarjeta);
+        document.getElementById('campoSinpe').classList.toggle('d-none', esTarjeta);
+    }
+</script>
 
 </body>
 </html>

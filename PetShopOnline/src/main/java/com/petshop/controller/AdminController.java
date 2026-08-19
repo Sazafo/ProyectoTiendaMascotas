@@ -3,6 +3,7 @@ package com.petshop.controller;
 import com.petshop.domain.Categoria;
 import com.petshop.domain.Producto;
 import com.petshop.service.CategoriaService;
+import com.petshop.service.PedidoService;
 import com.petshop.service.ProductoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,13 +22,16 @@ public class AdminController {
 
     private final ProductoService productoService;
     private final CategoriaService categoriaService;
+    private final PedidoService pedidoService;
 
     public AdminController(
             ProductoService productoService,
-            CategoriaService categoriaService) {
+            CategoriaService categoriaService,
+            PedidoService pedidoService) {
 
         this.productoService = productoService;
         this.categoriaService = categoriaService;
+        this.pedidoService = pedidoService;
     }
 
     // URI actual para marcar el enlace activo en el sidebar
@@ -76,6 +80,16 @@ public class AdminController {
         model.addAttribute(
                 "totalCategorias",
                 totalCategorias
+        );
+
+        model.addAttribute(
+                "pedidosHoy",
+                pedidoService.contarPedidosHoy()
+        );
+
+        model.addAttribute(
+                "pedidosRecientes",
+                pedidoService.listarRecientes(5)
         );
 
         model.addAttribute(

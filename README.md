@@ -1,22 +1,79 @@
-# ProyectoTiendaMascotas
-Aca se va a estar trabajando el proyecto de  Desarrollo Web  
+# PetShop Online
 
+PetShop Online es una aplicación web desarrollada con **Java, Spring Boot, Thymeleaf y MySQL** para la gestión y compra de productos para mascotas.
 
-El trabajo esta realizado por: Santiago Zamora Fonseca, Issac Segura Mata, Jose Alonso Carranza Ugalde, Yedelyn Morales Gonzales
+##Ejecución
 
-En el avance 2 50% del codigo 
-Realizamos
+La aplicación se ejecuta en:
 
-Santiago Zamora: Crea la estructura del MVC, Configuracion de bootstrap y fragmentos, Crear las entidades de productos, CRUD de productos, pagina principal, detalles de productos  abarcando las historias de usuario: HU-06, HU-14, HU-15,HU-16
+http://localhost:8080
 
-Jose Alonso: Registro, Login, LogOut, Perfil de usuario, abarcando las historias de usario: HU-01,HU-02,HU-03
+Antes de iniciar el proyecto, debe estar creada la base de datos:
 
-issac: Carrito, Agregar productos, Cambiar cantidades, Eliminar productos, CheckOut, abarcando las historias de usuario:  HU-07 y HU-08
+petshop_db
 
-Yedelyn: Dashboard de administrador, Menu Lateral, CRUD de categorias, Panel Administrativo, abarcando las historias de usuario: Parte de la HU-14, HU-20 
+## Usuarios
 
-Quedando pendientes historias de usarios: HU-04 cambiar la contraseña,  HU-05 Recuperacion contraseña por correo, HU-09 Ver historial de pedidos 
-Administrador HU-13 Cambiar contraseña administrador, HU-17 Gestion de pedidos, HU-18  Generar reporte de ventas,  HU-19 Gestionar Usuarios 
-Mejoras: Mejorar la parte visual del proyecto, a la hora de realizar inicios de sesion, perfil usuario y registrarse
+### Administrador
 
-Yedelyn: Reportes, se abarca la HU-18: Reportes de ventas.
+Correo:
+admin@petshop.com
+
+Contraseña:
+1234
+
+El administrador puede:
+
+- Gestionar productos.
+- Crear, editar y eliminar productos.
+- Gestionar categorías.
+- Administrar el stock.
+- Consultar pedidos.
+- Gestionar usuarios.
+- Acceder al panel administrativo.
+
+### Usuario
+
+Los usuarios pueden registrarse directamente desde la aplicación.
+
+Un usuario puede:
+
+- Iniciar sesión.
+- Consultar productos.
+- Filtrar productos por categoría y precio.
+- Ver detalles de productos.
+- Agregar productos al carrito.
+- Realizar compras.
+- Consultar sus pedidos.
+- Editar su perfil.
+- Publicar reseñas de productos.
+
+## Base de datos
+
+El sistema utiliza **MySQL** y la base de datos:
+
+petshop_db
+
+Tablas principales:
+
+- usuario
+- categoria
+- producto
+- pedido
+- detalle_pedido
+- pago
+- movimiento_inventario
+- resena
+
+Los productos, usuarios, categorías, pedidos, pagos, movimientos de inventario y reseñas se almacenan de forma persistente en MySQL.
+
+## Tecnologías
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- Thymeleaf
+- MySQL
+- Bootstrap
+- HTML / CSS
+- Maven
